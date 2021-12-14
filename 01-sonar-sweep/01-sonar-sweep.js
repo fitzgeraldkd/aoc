@@ -1,27 +1,29 @@
-// import inputs from './inputs';
-const inputs = require('./inputs.js')
+import fs from 'fs';
 
-console.log(inputs);
+const processInputs = (path="inputs.txt") => {
+  return fs.readFileSync(path, "utf8")
+  .split("\n")
+  .map(value => parseInt(value));
+};
 
-let count = 0;
-let prev = inputs[0];
-inputs.forEach(depth => {
-  if (depth > prev) {
-    count++;
-  }
-  prev = depth;
-});
+const countIncreases = array => {
+  return array.reduce((prev, curr, ind, arr) => (
+    (ind < arr.length - 1 && curr < arr[ind+1]) ? prev + 1 : prev
+  ), 0);
+};
 
-console.log(count)
-count = 0;
-let window = [inputs[0], inputs[1], inputs[2]];
-for (let i=0; i<inputs.length-2;i++) {
-  const prev = window[0] + window[1] + window[2];
-  console.log(prev);
-  window = [window[1], window[2], inputs[i+3]];
-  if (window[0] + window[1] + window[2] > prev) {
-    count++;
-  }
-}
+const part1 = (path) => {
+  const inputs = processInputs(path);
+  return countIncreases(inputs);
+};
 
-console.log(count)
+const part2 = (path) => {
+  const inputs = processInputs(path);
+  return countIncreases(inputs
+    .map((value, ind, arr) => (
+      ind < arr.length - 2 ? value + arr[ind+1] + arr[ind+2] : undefined
+    ))
+    .filter(value => value !== undefined));
+};
+
+export { part1, part2 };
