@@ -1,26 +1,24 @@
-const fs = require('fs');
-const inputs = fs
-  .readFileSync("inputs.txt", "utf8")
-  .split("\n")
-  // .map(item => parseInt(item, 10));
-  // .map(item => item.trim());
+import fs from 'fs';
 
-console.log(inputs);
+const processInputs = (path="inputs.txt") => {
+  return fs
+    .readFileSync("inputs.txt", "utf8")
+    .split("\n")
+    // .map(item => parseInt(item, 10));
+    // .map(item => item.trim());
+};
 
-const part1 = (inputs) => {
-
+const part1 = (path) => {
+  const inputs = processInputs(path);
 
 };
 
-const results1 = part1(inputs);
-
-console.log(results1);
-
-const part2 = (inputs) => {
-
+const part2 = (path) => {
+  const inputs = processInputs(path);
 
 };
 
-const results2 = part2(inputs);
+console.log(part1());
+console.log(part2());
 
-console.log(results2);
+export { part1, part2 };
