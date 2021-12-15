@@ -3,17 +3,17 @@ import fs from 'fs';
 const processInputs = (path="inputs.txt") => {
   return fs
     .readFileSync(path, "utf8")
-    .split("\n")
-    // .map(value => parseInt(value));
+    .split("\n");
 };
 
-const countDigits = (inputs) => {
+const countDigits = (inputs, atIndex) => {
   return inputs.reduce((digits, item) => {
-    for (let i=0; i<item.length; i++) {
-      if (digits[i] !== undefined) {
-        if (item[i] === '1') digits[i]++
-        else digits[i]--
-      } else digits[i] = item[i] === '1' ? 1 : -1;
+    for (let i=(atIndex ? atIndex : 0); i < (atIndex ? atIndex+1 : item.length); i++) {
+      const index = atIndex ? 0 : i;
+      if (digits[index] !== undefined) {
+        if (item[i] === '1') digits[index]++
+        else digits[index]--
+      } else digits[index] = item[i] === '1' ? 1 : -1;
     }
     return digits;
   }, []);
@@ -29,70 +29,24 @@ const part1 = (path) => {
 
 const part2 = (path) => {
   const inputs = processInputs(path);
+  let oxygen = [...inputs];
+  let carbonDiox = [...inputs];
+
+  let i = 0;
+  while (oxygen.length > 1) {
+    const oneMoreCommon = countDigits(oxygen, i)[0] >= 0;
+    oxygen = oxygen.filter(value => value[i] === (oneMoreCommon ? '1' : '0'));
+    i++;
+  }
+
+  i = 0;
+  while (carbonDiox.length > 1) {
+    const oneMoreCommon = countDigits(carbonDiox, i)[0] >= 0;
+    carbonDiox = carbonDiox.filter(value => value[i] === (oneMoreCommon ? '0' : '1'));
+    i++;
+  }
   
+  return parseInt(oxygen[0], 2) * parseInt(carbonDiox[0], 2);
 };
 
 export { part1, part2 };
-
-// const fs = require('fs');
-// const inputs = fs
-//   .readFileSync("inputs.txt", "utf8")
-//   .split("\n")
-//   // .map(item => parseInt(item, 10));
-//   .map(item => item.trim());
-
-// const digits = [];
-
-// console.log(inputs);
-// inputs.forEach(item => {
-//   for (let i=0; i<item.length; i++) {
-//     if (digits[i] !== undefined) {
-//       if (item[i] === '1') digits[i]++
-//       else digits[i]--
-//     } else digits[i] = 1;
-//   }
-// })
-
-// const countDigits = (inputs) => {
-//   const digits = [];
-//   inputs.forEach(item => {
-//     for (let i=0; i<item.length; i++) {
-//       if (digits[i] !== undefined) {
-//         if (item[i] === '1') digits[i]++
-//         else digits[i]--
-//       } else digits[i] = item[i] === '1' ? 1 : -1;
-//     }
-//   })
-//   return digits
-// }
-
-// console.log(digits);
-// console.log(digits[1000])
-
-const oxy = (values) => {
-  for (let i=0; i<values[0].length; i++) {
-    const digits = countDigits(values);
-    console.log(values);
-    values = values.filter(value => {
-      return value[i] === (digits[i] >= 0 ? '1' : '0')
-    });
-    console.log(values.length, i)
-    if (values.length === 1) return values[0];
-  }
-}
-
-// console.log(oxy(inputs));
-
-const co = (values) => {
-  for (let i=0; i<values[0].length; i++) {
-    const digits = countDigits(values);
-    // console.log(values);
-    values = values.filter(value => {
-      return value[i] === (digits[i] < 0 ? '1' : '0')
-    });
-    console.log(values.length)
-    if (values.length === 1) return values[0];
-  }
-}
-
-// console.log(co(inputs));
