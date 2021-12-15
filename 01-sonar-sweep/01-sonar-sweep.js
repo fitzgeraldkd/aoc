@@ -1,9 +1,10 @@
 import fs from 'fs';
 
 const processInputs = (path="inputs.txt") => {
-  return fs.readFileSync(path, "utf8")
-  .split("\n")
-  .map(value => parseInt(value));
+  return fs
+    .readFileSync(path, "utf8")
+    .split("\n")
+    .map(value => parseInt(value));
 };
 
 const countIncreases = array => {
