@@ -58,14 +58,17 @@ const getType4Body = (body, data) => {
 }
 
 const getOtherBody = (body, data) => {
+  console.log('Getting Other Body:', body)
   const lengthTypeId = body[0];
   if (lengthTypeId === '0') {
-    console.log('test')
+    // console.log('test')
     const totalLength = body.slice(1, 16);
     const subBody = body.slice(16);
     const dividingIndex = determineEnd(subBody);
+    console.log('Sub Body', subBody, 'Body', body)
+    const endIndex = determineEnd(subBody.slice(dividingIndex))
     const subpacketA = subBody.slice(0, dividingIndex);
-    const subpacketB = subBody.slice(dividingIndex);
+    const subpacketB = subBody.slice(dividingIndex, dividingIndex + endIndex);
     data.queue.push(subpacketA, subpacketB);
     const packets = [subpacketA, subpacketB]
     return { lengthTypeId, totalLength, packets }
@@ -77,11 +80,11 @@ const getOtherBody = (body, data) => {
     const packets = [];
     while (packets.length < parseInt(packetCount, 2)) {
       const newStart = determineEnd(subBody.slice(thisStart))
-      console.log(thisStart, thisStart + newStart);
+      // console.log(thisStart, thisStart + newStart);
       packets.push(subBody.slice(thisStart, thisStart + newStart))
       thisStart += newStart;
     }
-    console.log(packets)
+    // console.log(packets)
     data.queue.push(...packets)
     return { lengthTypeId, packetCount, packets };
     for (let i=0; i<parseInt(packetCount, 2); i++) {
@@ -99,19 +102,23 @@ const determineEnd = body => {
   console.log(body.length)
   const packetVersion = body.slice(0, 3);
   const packetTypeId = body.slice(3, 6);
+  console.log('   Determing End:', body, '\n   Version:', packetVersion, '\n   Type ID:', packetTypeId)
   if (packetTypeId === '100') {
     let i = 6;
     while (body[i] !== '0') {
-      console.log('here')
+      // console.log('here')
       i += 5;
     }
     return i + 5;
   } else {
     const lengthTypeId = body.slice(6, 7);
     const subBody = body.slice(7);
+    console.log('     Length Type ID:', lengthTypeId, '\n     Sub Body:', subBody)
     if (lengthTypeId === '0') {
+      console.log('nonrecursive', subBody.slice(0, 15), 7 + parseInt(subBody.slice(0, 15), 2))
       return 7 + parseInt(subBody.slice(0, 15), 2);
     } else {
+      console.log('recursive', determineEnd(subBody))
       return determineEnd(subBody);
     }
   }
@@ -125,7 +132,7 @@ const processPackets = data => {
     const typeId = packet.slice(3, 6);
     const body = packet.slice(6);
     const parsedBody = typeId === '100' ? getType4Body(body, data) : getOtherBody(body, data);
-    console.log(packet);
+    console.log('This Packet', packet, '\nVersion', version, '\nType ID', typeId, '\nBody', body, '\nParsed Body', parsedBody, '\n');
     data.packets.push({version, typeId, parsedBody})
   }
   return data;
@@ -136,6 +143,7 @@ const part1 = (path) => {
   // console.log(inputs);
   // console.log(inputs.map(value => hex2dec[value]).join(''))
   const packet = inputs.map(value => hex2dec[value]).join('')
+  console.log(packet);
   return processPackets({packets: [], queue: [packet]})
   // // const header = packet.slice(0, 6);
   // // const body = packet.slice(6);
@@ -169,6 +177,7 @@ const part2 = (path) => {
 
 };
 
+console.log('\n\n\n\n\n\n\n\n\n\n\n')
 console.log(part1());
 console.log(part2());
 
