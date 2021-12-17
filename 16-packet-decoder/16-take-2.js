@@ -61,7 +61,6 @@ const processLiteral = body => {
 }
 
 const processPacket = (packet) => {
-  console.log(++count);
   const version = packet.slice(0, 3);
   const type = packet.slice(3, 6);
   let length;
@@ -98,10 +97,51 @@ const processPacket = (packet) => {
   return {version: version, type: type, length: length, contents: data};
 };
 
-let count=0;
+const calculateValue = packet => {
+  console.log(packet);
+  let value;
+  switch (parseInt(packet.type, 2)) {
+    case 0:
+      console.log('sum');
+      value = packet.contents.reduce((prev, sub) => prev + calculateValue(sub), 0);
+      break;
+    case 1:
+      console.log('product');
+      value = packet.contents.reduce((prev, sub) => prev * calculateValue(sub), 1);
+      break;
+    case 2:
+      console.log('minimum');
+      // const subpackets = packet.contents;
+      // console.log(subpackets);
+      // console.log(subpackets.map(sub => calculateValue(sub)))
+      value = Math.min(...packet.contents.map(sub => calculateValue(sub)));
+      break;
+    case 3:
+      console.log('maximum');
+      value = Math.max(...packet.contents.map(sub => calculateValue(sub)));
+      break;
+    case 4:
+      value = parseInt(packet.contents, 2);
+      break;
+    case 5:
+      console.log('greater than');
+      value = (calculateValue(packet.contents[0]) > calculateValue(packet.contents[1])) ? 1 : 0;
+      break;
+    case 6:
+      console.log('less than');
+      value = (calculateValue(packet.contents[0]) < calculateValue(packet.contents[1])) ? 1 : 0;
+      break;
+    case 7:
+      console.log('greater than');
+      value = (calculateValue(packet.contents[0]) === calculateValue(packet.contents[1])) ? 1 : 0;
+      break;
+  }
+  return value;
+}
+
 const part1 = (path) => {
   const inputs = processInputs(path);
-  const packet = inputs.map(value => hex2dec[value]).join('')
+  const packet = inputs.map(value => hex2dec[value]).join('');
   console.log(packet);
   const processed = processPacket(packet);
   console.log(JSON.stringify(processed))
@@ -119,11 +159,15 @@ const part1 = (path) => {
 
 const part2 = (path) => {
   const inputs = processInputs(path);
-
+  const packet = inputs.map(value => hex2dec[value]).join('');
+  const processed = processPacket(packet);
+  console.log(JSON.stringify(processed))
+  let results = calculateValue(processed);
+  return results;
 };
 
 console.log('\n\n\n\n\n\n\n\n\n\n\n')
-console.log(part1());
+// console.log(part1());
 console.log(part2());
 
 export { part1, part2 };
