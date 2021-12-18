@@ -2,7 +2,7 @@ import fs from 'fs';
 
 const processInputs = (path="inputs.txt") => {
   return fs
-    .readFileSync("inputs.txt", "utf8")
+    .readFileSync(path, "utf8")
     .split("\n")
     // .map(item => parseInt(item, 10));
     // .map(item => item.trim());
@@ -10,6 +10,7 @@ const processInputs = (path="inputs.txt") => {
 
 const part1 = (path) => {
   const inputs = processInputs(path);
+  console.log(inputs);
 
 };
 

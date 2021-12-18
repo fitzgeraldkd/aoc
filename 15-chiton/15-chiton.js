@@ -2,7 +2,7 @@ import fs from 'fs';
 
 const processInputs = (path="inputs.txt") => {
   return fs
-    .readFileSync("inputs.txt", "utf8")
+    .readFileSync(path, "utf8")
     .split("\n")
     .map(row => row.split('').map(value => parseInt(value)))
     // .map(item => parseInt(item, 10));
@@ -64,9 +64,64 @@ class Graph {
       });
     }
     return distances;
- }
+  }
+
+  aStar(startNode, endNode, h) {
+    const queue = [startNode];
+    const prev = {};
+    const gScore = {[startNode]: 0};
+    const fScore = {[startNode]: 0};
+
+    while (queue.length > 0) {
+      const currData = queue.pop();
+      const currNode = this.nodes[currData];
+
+      if (currData === endNode) {
+        return gScore[currData];
+      }
+
+      // console.log(queue.map(value => [value, fScore[value]]));
+
+      for (const neighbor in currNode.edges) {
+        if (!(neighbor in fScore)) fScore[neighbor] = Infinity;
+        if (!(neighbor in gScore)) gScore[neighbor] = Infinity;
+        const tentativeGScore = gScore[currData] + currNode.edges[neighbor];
+        if (tentativeGScore < gScore[neighbor]) {
+          prev[neighbor] = currData;
+          gScore[neighbor] = tentativeGScore;
+          fScore[neighbor] = tentativeGScore + h[neighbor];
+          // console.log(tentativeGScore, h[neighbor])
+          if (!(neighbor in queue)) queue.push(neighbor)
+        }
+      }
+
+
+      queue.sort((a, b) => {
+        if (fScore[a] > fScore[b]) return -1;
+        if (fScore[a] < fScore[b]) return 1;
+        return 0
+      });
+    }
+    // console.log(gScore)
+  }
 
 };
+
+const estimateH = (map, goal) => {
+  const weight = 1;
+  // return map.map((row, y) => 
+  //   row.map((col, x) => 
+  //     weight * (Math.abs(goal.x - x) + Math.abs(goal.y - y))
+  //   )
+  // );
+  const h = {};
+  for (let y=0; y<map.length; y++) {
+    for (let x=0; x<map[y].length; x++) {
+      h[`${x},${y}`] = weight * (Math.abs(goal.x - x) + Math.abs(goal.y - y));
+    }
+  }
+  return h;
+}
 
 const tileMap = (inputs) => {
   const tiled = [];
@@ -100,8 +155,13 @@ const part1 = (path) => {
     }
   }
   // console.log(graph);
-  const distances = graph.djikstraAlgorithm('0,0')
-  console.log(distances[`${inputs[0].length-1},${inputs.length-1}`]);
+  // const distances = graph.djikstraAlgorithm('0,0')
+
+  const h = estimateH(inputs, {x: inputs[0].length-1, y: inputs.length-1});
+  // console.log(h)
+  return graph.aStar('0,0', `${inputs[0].length-1},${inputs.length-1}`, h);
+
+  return distances[`${inputs[0].length-1},${inputs.length-1}`];
 };
 
 const part2 = (path) => {
@@ -119,13 +179,19 @@ const part2 = (path) => {
     }
   }
   // console.log(graph);
-  const distances = graph.djikstraAlgorithm('0,0')
+  // const distances = graph.djikstraAlgorithm('0,0')
+
+  // TODO: Implement a heap for the queue in algorithms
+  return 0;
+
+  const h = estimateH(tiledInputs, {x: tiledInputs[0].length-1, y: tiledInputs.length-1});
+  return graph.aStar('0,0', `${tiledInputs[0].length-1},${tiledInputs.length-1}`, h);
   // console.log(tiledInputs)
   // console.log(tiledInputs.length)
-  console.log(distances[`${tiledInputs[0].length-1},${tiledInputs.length-1}`]);
+  return distances[`${tiledInputs[0].length-1},${tiledInputs.length-1}`];
 };
 
-console.log(part1());
-console.log(part2());
+// console.log(part1());
+// console.log(part2());
 
 export { part1, part2 };

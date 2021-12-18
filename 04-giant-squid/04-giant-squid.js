@@ -1,14 +1,57 @@
-const fs = require('fs');
-const inputs = fs
-  .readFileSync("inputs.txt", "utf8")
-  .split("\n")
-  // .map(item => parseInt(item, 10));
-  .map(item => item.trim());
+import fs from 'fs';
 
-// console.log(inputs);
+const processInputs = (path="inputs.txt") => {
+  return fs
+    .readFileSync(path, "utf8")
+    .split("\n\n")
+    // .map((item, index) => (
+    //   index === 0 ? item.split(',') : item.split("\n").map(row => (
+    //     row.trim().replaceAll(/\s+/g, ' ').split(' ')
+    //   ))
+    // ));
+    .map((item, index) => {
+      if (index === 0) {
+        return item.split(',');
+      } else {
+        const board = {};
+        item.split("\n").forEach((row, y) => (
+          row.trim().replaceAll(/\s+/g, ' ').split(' ').forEach((value, x) => (
+            board[value] = {x, y}
+          ))
+        ));
+        return board;
+      }
+    });
+};
+
+// const fs = require('fs');
+// const inputs = fs
+//   .readFileSync("inputs.txt", "utf8")
+//   .split("\n")
+//   // .map(item => parseInt(item, 10));
+//   .map(item => item.trim());
+
+// // console.log(inputs);
 
 
-const part1 = (inputs) => {
+
+const part1 = (path) => {
+  const [toDraw, boards] = processInputs(path);
+  const drawn = [];
+  console.log(toDraw);
+  console.log(boards);
+  while (toDraw.length > 0) {
+    drawn.push(toDraw.shift());
+
+  }
+};
+
+const part2 = (path) => {
+  const [toDraw, boards] = processInputs(path);
+};
+
+const part1old = (path) => {
+  const inputs = processInputs(path);
   const toDraw = inputs.shift().split(',').map(value => parseInt(value));
   inputs.shift();
   const boards = [];
@@ -35,7 +78,7 @@ const part1 = (inputs) => {
       for (const row of board) {
         boardCheck.push(row.map(value => drawn.includes(value)))
       }
-      console.log(boardCheck)
+      // console.log(boardCheck)
       // console.log(boardCheck);
 
       let successA = true;
@@ -59,7 +102,7 @@ const part1 = (inputs) => {
       // console.log(successA || successB || successC || successD)
       if (successA || successB ) {
         successBoard = board;
-        console.log(successBoard)
+        // console.log(successBoard)
         let score = 0;
         successBoard.forEach((row) => {
           row.forEach(value => {
@@ -77,7 +120,8 @@ const part1 = (inputs) => {
 // console.log(part1(inputs));
 // const success = 
 
-const part2 = (inputs) => {
+const part2old = (path) => {
+  const inputs = processInputs(path);
   const toDraw = inputs.shift().split(',').map(value => parseInt(value));
   inputs.shift();
   const boards = [];
@@ -138,8 +182,8 @@ const part2 = (inputs) => {
       };
     }
   }
-  console.log(successBoard);
-  console.log(winningDraw);
+  // console.log(successBoard);
+  // console.log(winningDraw);
   let score = 0;
   successBoard.forEach((row) => {
     row.forEach(value => {
@@ -149,4 +193,6 @@ const part2 = (inputs) => {
   return score * winningDraw.at(-1);
 };
 
-console.log(part2(inputs));
+// console.log(part2(inputs));
+
+export { part1, part2 };
