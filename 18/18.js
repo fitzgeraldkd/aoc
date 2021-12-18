@@ -194,11 +194,45 @@ const part1 = (path) => {
 
 const part2 = (path) => {
   const inputs = processInputs(path);
+  // console.log(inputs);
+  for (const input of inputs) {
+    // console.log(JSON.stringify(input));
+  }
+  const magnitudes = inputs.map(input => getMagnitude(input));
+  for (const magnitude of magnitudes) {
+    // console.log(JSON.stringify(magnitude))
+  }
 
+  let maxMagnitude = 0;
+  let inputA;
+  let inputB;
+  let reduced;
+  // let indeces;
+  for (let i=0; i<inputs.length; i++) {
+    for (let j=0; j<inputs.length; j++) {
+      if (i !== j) {
+        const thisInputA = JSON.parse(JSON.stringify(inputs[i]))
+        const thisInputB = JSON.parse(JSON.stringify(inputs[j]))
+        const thisReduced = reduce([thisInputA, thisInputB])
+        const thisMagnitude = getMagnitude(thisReduced);
+        // maxMagnitude = Math.max(maxMagnitude, thisMagnitude);
+        if (thisMagnitude > maxMagnitude) {
+          inputA = inputs[i];
+          inputB = inputs[j];
+          reduced = thisReduced;
+          maxMagnitude = thisMagnitude;
+        }
+      }
+    }
+  }
+  // console.log(JSON.stringify(inputA));
+  // console.log(JSON.stringify(inputB));
+  // console.log(JSON.stringify(reduced));
+  return maxMagnitude
 
 };
 
-console.log(part1());
+// console.log(part1());
 console.log(part2());
 
 // check explode
