@@ -15,29 +15,29 @@ const processInputs = (path="inputs.txt") => {
     // .map(item => item.trim());
 };
 
-const addRow = (grid, top=true) => {
+const addRow = (grid, top=true, value=0) => {
   const row = [];
   for (let i=0; i<grid[0].length; i++) {
-    row.push(0);
+    row.push(value);
   }
   return top ? [row, ...grid] : [...grid, row];
 }
 
-const addColumn = (grid, left=true) => {
-  return grid.map(row => left ? [0, ...row] : [...row, 0])
+const addColumn = (grid, left=true, value=0) => {
+  return grid.map(row => left ? [value, ...row] : [...row, value])
 }
 
-const getCluster = (grid, x, y) => {
+const getCluster = (grid, x, y, infinitePixels) => {
   if (x === 0) {
-    grid = addColumn(grid);
+    grid = addColumn(grid, true, infinitePixels);
     x++;
   }
-  if (x === grid[0].length-1) grid = addColumn(grid, false);
+  if (x === grid[0].length-1) grid = addColumn(grid, false, infinitePixels);
   if (y === 0) {
-    grid = addRow(grid);
+    grid = addRow(grid, true, infinitePixels);
     y++;
   }
-  if (y === grid.length-1) grid = addRow(grid, false);
+  if (y === grid.length-1) grid = addRow(grid, false, infinitePixels);
 
   let binary = '';
   [[-1, -1], [0, -1], [1, -1], [-1, 0], [0, 0], [1, 0], [-1, 1], [0, 1], [1, 1]].forEach(pair => {
@@ -46,19 +46,19 @@ const getCluster = (grid, x, y) => {
   return { grid, binary };
 }
 
-const enhance = (image, algorithm) => {
-  image = addColumn(image);
-  image = addColumn(image);
-  image = addColumn(image, false);
-  image = addColumn(image, false);
-  image = addRow(image);
-  image = addRow(image);
-  image = addRow(image, false);
-  image = addRow(image, false);
+const enhance = (image, algorithm, infinitePixels) => {
+  image = addColumn(image, true, infinitePixels);
+  image = addColumn(image, true, infinitePixels);
+  image = addColumn(image, false, infinitePixels);
+  image = addColumn(image, false, infinitePixels);
+  image = addRow(image, true, infinitePixels);
+  image = addRow(image, true, infinitePixels);
+  image = addRow(image, false, infinitePixels);
+  image = addRow(image, false, infinitePixels);
   const result = image.map(_ => []);
   for (let x=0; x<image[0].length; x++) {
     for (let y=0; y<image.length; y++) {
-      const { binary } = getCluster(image, x, y);
+      const { binary } = getCluster(image, x, y, infinitePixels);
       // console.log(binary);
       // console.log(parseInt(binary, 2));
       // console.log(result, y);
@@ -92,9 +92,14 @@ const part1 = (path) => {
   image = addColumn(addColumn(addRow(addRow(image), false)), false);
   // console.log(image);
   // console.log(enhance(image, algorithm));
-  image = enhance(image, algorithm);
+  let infinitePixels = 0;
+
+  image = enhance(image, algorithm, infinitePixels);
+  if (algorithm[0] === '#') infinitePixels = infinitePixels === 0 ? 1 : 0;
   printImage(image);
-  image = enhance(image, algorithm);
+
+  image = enhance(image, algorithm, infinitePixels);
+  if (algorithm[0] === '#') infinitePixels = infinitePixels === 0 ? 1 : 0;
   printImage(image);
   return countLight(image);
 };
