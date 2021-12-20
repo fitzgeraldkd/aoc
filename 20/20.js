@@ -106,6 +106,19 @@ const part1 = (path) => {
 
 const part2 = (path) => {
   const inputs = processInputs(path);
+  // console.log(inputs);
+  const algorithm = inputs[0];
+  let image = inputs[1];
+  image = addColumn(addColumn(addRow(addRow(image), false)), false);
+  // console.log(image);
+  // console.log(enhance(image, algorithm));
+  let infinitePixels = 0;
+
+  for (let i=0; i<50; i++) {
+    image = enhance(image, algorithm, infinitePixels);
+    if (algorithm[0] === '#') infinitePixels = infinitePixels === 0 ? 1 : 0;
+  }
+  return countLight(image);
 
 };
 
