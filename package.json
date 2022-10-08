@@ -1,11 +1,11 @@
 {
-  "name": "aoc-2021",
+  "name": "aoc",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "node test.js"
+    "test": "cd 2021; node test.js"
   },
   "author": "",
   "license": "ISC"
