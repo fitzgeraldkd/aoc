@@ -2,23 +2,31 @@ import math
 
 
 class PriorityQueue:
+    def __getitem__(self, i):
+        return self.items[i]['value']
+
     def __init__(self):
         self.items = []
     
+    def __iter__(self):
+        return iter(map(lambda item: item['value'], self.items))
+
+    def __len__(self):
+        return len(self.items)
+    
     def add_item(self, value, weight):
-        self.items.append({ 'value': value, 'weight': weight })
+        new_item = {'value': value, 'weight': weight}
+        for index, item in enumerate(self.items):
+            if weight > item['weight']:
+                self.items.insert(index, new_item)
+                return value
+        
+        self.items.append(new_item)
+        return value
 
     def pop(self):
-        index = None
-        min = { 'value': None, 'weight': math.inf }
-
-        for i, item in enumerate(self.items):
-            if item['weight'] < min['weight']:
-                index = i
-                min = item
-        
-        self.items.pop(index)
-        return min['value']
+        item = self.items.pop()
+        return item['value']
     
     def is_empty(self):
         return len(self.items) == 0
