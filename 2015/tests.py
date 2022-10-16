@@ -46,7 +46,7 @@ class Test2015Challenges(unittest.TestCase):
     
     def test_day_5(self):
         self.assertEqual(day_05.part_1(), 258)
-        self.fail('Finish day 4 part 2.')
+        self.assertEqual(day_05.part_2(), 53)
     
     def test_day_6(self):
         self.assertEqual(day_06.part_1(), 569999)
