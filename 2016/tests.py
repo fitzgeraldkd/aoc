@@ -8,6 +8,7 @@ import day_05.solution as day_05
 import day_06.solution as day_06
 import day_07.solution as day_07
 import day_08.solution as day_08
+import day_09.solution as day_09
 
 
 class Test2016Challenges(unittest.TestCase):
@@ -44,6 +45,10 @@ class Test2016Challenges(unittest.TestCase):
         self.assertEqual(day_08.part_1(), 121)
         self.skipTest('Script cannot parse the results as text.')
         self.assertEqual(day_08.part_2(), 'RURUCEOEIL')
+
+    def test_day_9(self):
+        self.assertEqual(day_09.part_1(), 115118)
+        self.assertEqual(day_09.part_2(), 11107527530)
 
 
 if __name__ == '__main__':
