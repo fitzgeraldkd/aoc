@@ -5,7 +5,7 @@ sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pat
 
 
 def parse_input(input: str):
-    return input.strip()
+    return int(input.strip())
 
 
 def get_inputs():
@@ -13,19 +13,30 @@ def get_inputs():
     file = open(f'{script_dir}/inputs.txt')
     inputs = [parse_input(line) for line in file.readlines()]
     file.close()
-    return inputs
+    return inputs[0]
 
 
 def part_1():
-    inputs = get_inputs()
+    elves = list(range(get_inputs()))
 
-    return None
+    while len(elves) > 1:
+        start = 0 if len(elves) % 2 == 0 else 2
+        elves = elves[start::2]
+
+    return elves[0] + 1
 
 
 def part_2():
-    inputs = get_inputs()
+    elves = list(range(get_inputs()))
 
-    return None
+    index = len(elves) // 2
+    while len(elves) > 1:
+        elves.pop(index)
+        if len(elves) % 2 == 0:
+            index += 1
+        index = index % len(elves)
+
+    return elves[0] + 1
 
 
 if __name__ == '__main__':

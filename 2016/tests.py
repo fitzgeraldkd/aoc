@@ -15,6 +15,12 @@ import day_12.solution as day_12
 import day_13.solution as day_13
 import day_14.solution as day_14
 import day_15.solution as day_15
+import day_16.solution as day_16
+import day_17.solution as day_17
+import day_18.solution as day_18
+import day_19.solution as day_19
+import day_20.solution as day_20
+import day_21.solution as day_21
 
 
 class Test2016Challenges(unittest.TestCase):
@@ -79,6 +85,30 @@ class Test2016Challenges(unittest.TestCase):
     def test_day_15(self):
         self.assertEqual(day_15.part_1(), 148737)
         self.assertEqual(day_15.part_2(), 2353212)
+
+    def test_day_16(self):
+        self.assertEqual(day_16.part_1(), '11111000111110000')
+        self.assertEqual(day_16.part_2(), '10111100110110100')
+
+    def test_day_17(self):
+        self.assertEqual(day_17.part_1(), 'DDURRLRRDD')
+        self.assertEqual(day_17.part_2(), 436)
+
+    def test_day_18(self):
+        self.assertEqual(day_18.part_1(), 1987)
+        self.assertEqual(day_18.part_2(), 19984714)
+
+    def test_day_19(self):
+        self.assertEqual(day_19.part_1(), 1834471)
+        self.assertEqual(day_19.part_2(), 1420064)
+
+    def test_day_20(self):
+        self.assertEqual(day_20.part_1(), 17348574)
+        self.assertEqual(day_20.part_2(), 104)
+
+    def test_day_21(self):
+        self.assertEqual(day_21.part_1(), 'bfheacgd')
+        self.assertEqual(day_21.part_2(), 'gcehdbfa')
 
 
 if __name__ == '__main__':
