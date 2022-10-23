@@ -1,3 +1,4 @@
+import numpy as np
 import os
 
 
@@ -22,12 +23,20 @@ def is_clear(disc: dict, time: int):
     return (time + disc['row'] + disc['start']) % disc['num_positions'] == 0
 
 
+def get_increment(discs, time):
+    positions = []
+    for disc in discs:
+        if is_clear(disc, time):
+            positions.append(disc['num_positions'])
+    return np.lcm.reduce(positions)
+
+
 def part_1():
     discs = get_inputs()
 
     time = 0
     while any([not is_clear(disc, time) for disc in discs]):
-        time += 1
+        time += get_increment(discs, time)
     
     return time
 
@@ -42,7 +51,7 @@ def part_2():
 
     time = 0
     while any([not is_clear(disc, time) for disc in discs]):
-        time += 1
+        time += get_increment(discs, time)
     
     return time
 
