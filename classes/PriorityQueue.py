@@ -1,6 +1,3 @@
-import math
-
-
 class PriorityQueue:
     def __getitem__(self, i):
         return self.items[i]['value']
@@ -33,11 +30,13 @@ class PriorityQueue:
     
     def has_item(self, check):
         for item in self.items:
-            if item.value == check:
+            if item['value'] == check:
                 return True
         return False
     
     def update_priority(self, value, weight):
-        for item in self.items:
+        for index, item in enumerate(self.items):
             if item['value'] == value:
-                value['weight'] = weight
+                self.items.pop(index)
+                self.add_item(value, weight)
+                break
