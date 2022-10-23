@@ -14,6 +14,7 @@ import day_11.solution as day_11
 import day_12.solution as day_12
 import day_13.solution as day_13
 import day_14.solution as day_14
+import day_15.solution as day_15
 
 
 class Test2016Challenges(unittest.TestCase):
@@ -74,6 +75,10 @@ class Test2016Challenges(unittest.TestCase):
     def test_day_14(self):
         self.assertEqual(day_14.part_1(), 25427)
         self.assertEqual(day_14.part_2(), 22045)
+
+    def test_day_15(self):
+        self.assertEqual(day_15.part_1(), 148737)
+        self.assertEqual(day_15.part_2(), 2353212)
 
 
 if __name__ == '__main__':
