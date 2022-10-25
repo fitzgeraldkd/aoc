@@ -21,6 +21,7 @@ import day_18.solution as day_18
 import day_19.solution as day_19
 import day_20.solution as day_20
 import day_21.solution as day_21
+import day_22.solution as day_22
 
 
 class Test2016Challenges(unittest.TestCase):
@@ -109,6 +110,11 @@ class Test2016Challenges(unittest.TestCase):
     def test_day_21(self):
         self.assertEqual(day_21.part_1(), 'bfheacgd')
         self.assertEqual(day_21.part_2(), 'gcehdbfa')
+
+    def test_day_22(self):
+        self.assertEqual(day_22.part_1(), 981)
+        self.skipTest('Has not been solved programmatically yet.')
+        self.assertEqual(day_22.part_2(), 233)
 
 
 if __name__ == '__main__':

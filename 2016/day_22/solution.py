@@ -1,3 +1,4 @@
+import csv
 import itertools
 import operator
 import os
@@ -46,6 +47,20 @@ def is_viable(node_a: dict, node_b: dict):
     
     return True
 
+def to_csv(nodes: dict):
+    rows = {}
+    for node in sorted(nodes.keys()):
+        print(node)
+        data = f'{nodes[node]["used"]} / {nodes[node]["size"]}'
+        if node[1] in rows:
+            rows[node[1]].append(data)
+        else:
+            rows[node[1]] = [data]
+    table = [rows[index] for index in rows]
+    with open('table.csv', 'w', encoding='UTF8', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerows(table)
+
 
 def part_1():
     nodes = get_inputs()
@@ -59,31 +74,24 @@ def part_1():
     return viable_count
 
 
-def get_adjacent(position: tuple):
-    return [tuple(map(operator.add, position, direction)) for direction in DIRECTIONS]
+def get_adjacent(position: tuple, max_x: int, max_y: int):
+    adjacent = []
+    for direction in DIRECTIONS:
+        neighbor = tuple(map(operator.add, position, direction))
+        if min(neighbor) >= 0 and neighbor[0] <= max_x and neighbor[1] <= max_y:
+            adjacent.append(neighbor)
+    return adjacent
 
 
 def part_2():
     nodes = get_inputs()
     max_x = 0
+    max_y = 0
 
-    # Nodes too full that will never be able to move data to an adjacent node (even if the adjacent node is emptied).
-    too_full = []
     for position in nodes:
         max_x = max(max_x, position[0])
-        for adjacent in get_adjacent(position):
-            if adjacent not in nodes:
-                continue
-            if nodes[position]['used'] < nodes[adjacent]['size']:
-                continue
-                too_full.append(position)
+        max_y = max(max_y, position[1])
 
-
-    goal = (max_x, 0)
-    absolute_max = nodes[(0, 0)]['size']
-
-    print(too_full)
-    print(max_x)
     return None
 
 
