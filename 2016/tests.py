@@ -22,6 +22,9 @@ import day_19.solution as day_19
 import day_20.solution as day_20
 import day_21.solution as day_21
 import day_22.solution as day_22
+import day_23.solution as day_23
+import day_24.solution as day_24
+import day_25.solution as day_25
 
 
 class Test2016Challenges(unittest.TestCase):
@@ -115,6 +118,18 @@ class Test2016Challenges(unittest.TestCase):
         self.assertEqual(day_22.part_1(), 981)
         self.skipTest('Has not been solved programmatically yet.')
         self.assertEqual(day_22.part_2(), 233)
+
+    def test_day_23(self):
+        self.assertEqual(day_23.part_1(), 11500)
+        self.skipTest('Highly unoptimized, takes about an hour to run.')
+        self.assertEqual(day_23.part_2(), 479008060)
+
+    def test_day_24(self):
+        self.assertEqual(day_24.part_1(), 502)
+        self.assertEqual(day_24.part_2(), 724)
+
+    def test_day_25(self):
+        self.assertEqual(day_25.part_1(), 196)
 
 
 if __name__ == '__main__':
