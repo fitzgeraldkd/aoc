@@ -7,8 +7,13 @@ import day_04.solution as day_04
 import day_05.solution as day_05
 import day_06.solution as day_06
 import day_07.tests as day_07
+import day_08.tests as day_08
+import day_09.tests as day_09
+import day_10.tests as day_10
+import day_11.tests as day_11
+import day_12.tests as day_12
 
-TEST_MODULES = [day_07]
+TEST_MODULES = [day_07, day_08, day_09, day_10, day_11, day_12]
 
 
 class Test2017Challenges(unittest.TestCase):
