@@ -9,16 +9,16 @@ def get_inputs():
     return inputs
 
 
-def part_1():
-    inputs = get_inputs()
+def part_1(override_inputs=None):
+    inputs = override_inputs or get_inputs()
     current_floor = 0
     for input in inputs:
         current_floor += 1 if input == '(' else -1
     return current_floor
 
 
-def part_2():
-    inputs = get_inputs()
+def part_2(override_inputs=None):
+    inputs = override_inputs or get_inputs()
     current_floor = 0
     for index, input in enumerate(inputs):
         current_floor += 1 if input == '(' else -1

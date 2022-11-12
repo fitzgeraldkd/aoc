@@ -1,6 +1,6 @@
 import unittest
 
-import day_01.solution as day_01
+import day_01.tests as day_01_tests
 import day_02.solution as day_02
 import day_03.solution as day_03
 import day_04.solution as day_04
@@ -26,12 +26,10 @@ import day_23.solution as day_23
 import day_24.solution as day_24
 import day_25.solution as day_25
 
+TEST_MODULES = [day_01_tests]
+
 
 class Test2015Challenges(unittest.TestCase):
-
-    def test_day_1(self):
-        self.assertEqual(day_01.part_1(), 138)
-        self.assertEqual(day_01.part_2(), 1771)
 
     def test_day_2(self):
         self.assertEqual(day_02.part_1(), 1588178)
@@ -130,4 +128,14 @@ class Test2015Challenges(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    
+    suite = unittest.TestSuite()
+    loader = unittest.TestLoader()
+
+    for test_module in TEST_MODULES:
+        suite.addTests(loader.loadTestsFromTestCase(test_module.TestBase))
+
+    runner = unittest.TextTestRunner()
+    result = runner.run(suite)
+
     unittest.main()
