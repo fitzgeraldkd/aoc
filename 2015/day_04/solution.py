@@ -17,10 +17,10 @@ def get_inputs():
     return inputs[0]
 
 
-def part_1():
-    inputs = get_inputs()
+def part_1(override_inputs: str = None):
+    inputs = override_inputs or get_inputs()
 
-    for i in range(1000000):
+    for i in range(10000000):
         hashed = hash(f'{inputs}{i}')
         if hashed.startswith('00000'):
             return i
@@ -28,8 +28,8 @@ def part_1():
     return None
 
 
-def part_2():
-    inputs = get_inputs()
+def part_2(override_inputs: str = None):
+    inputs = override_inputs or get_inputs()
 
     for i in range(10000000):
         hashed = hash(f'{inputs}{i}')

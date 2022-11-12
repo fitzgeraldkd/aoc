@@ -9,7 +9,7 @@ def get_inputs():
     return inputs
 
 
-def part_1(override_inputs=None):
+def part_1(override_inputs: str = None):
     inputs = override_inputs or get_inputs()
     current_floor = 0
     for input in inputs:
@@ -17,7 +17,7 @@ def part_1(override_inputs=None):
     return current_floor
 
 
-def part_2(override_inputs=None):
+def part_2(override_inputs: str = None):
     inputs = override_inputs or get_inputs()
     current_floor = 0
     for index, input in enumerate(inputs):

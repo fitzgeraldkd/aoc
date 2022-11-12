@@ -1,6 +1,8 @@
 import os
 import re
 
+from typing import List
+
 
 def parse_input(input):
     return input
@@ -14,8 +16,8 @@ def get_inputs():
     return inputs
 
 
-def part_1():
-    inputs = get_inputs()
+def part_1(override_inputs: List[str] = None):
+    inputs = override_inputs or get_inputs()
 
     nice_string_count = 0
     for input in inputs:
@@ -31,8 +33,8 @@ def part_1():
     return nice_string_count
 
 
-def part_2():
-    inputs = get_inputs()
+def part_2(override_inputs: List[str] = None):
+    inputs = override_inputs or get_inputs()
 
     nice_string_count = 0
     for input in inputs:
@@ -41,7 +43,6 @@ def part_2():
         for index in range(len(input) - 3):
             pair = input[index:index+2]
             if re.search(pair, input[index+2:]):
-                print(pair)
                 has_two_pairs = True
                 break
         if not has_two_pairs:

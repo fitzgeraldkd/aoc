@@ -1,4 +1,5 @@
 import os
+from typing import List
 
 
 def parse_input(input):
@@ -13,9 +14,9 @@ def get_inputs():
     return inputs
 
 
-def part_1():
-    inputs = get_inputs()
-    
+def part_1(override_inputs: List[List[int]] = None):
+    inputs = override_inputs or get_inputs()
+
     total_area = 0
     for input in inputs:
         [l, w, h] = input
@@ -26,8 +27,8 @@ def part_1():
     return total_area
 
 
-def part_2():
-    inputs = get_inputs()
+def part_2(override_inputs: List[List[int]] = None):
+    inputs = override_inputs or get_inputs()
 
     total_length = 0
     for input in inputs:

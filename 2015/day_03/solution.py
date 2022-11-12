@@ -21,8 +21,8 @@ def get_inputs():
     return inputs
 
 
-def part_1():
-    inputs = get_inputs()[0]
+def part_1(override_inputs: str = None):
+    inputs = override_inputs or get_inputs()[0]
 
     x = 0
     y = 0
@@ -42,8 +42,8 @@ def part_1():
     return len(houses.keys())
 
 
-def part_2():
-    inputs = get_inputs()[0]
+def part_2(override_inputs: str = None):
+    inputs = override_inputs or get_inputs()[0]
 
     position_map = {
         'santa': { 'x': 0, 'y': 0 },
@@ -64,7 +64,7 @@ def part_2():
             houses[key] += 1
         else:
             houses[key] = 1
-        
+
         is_santas_turn = not is_santas_turn
 
     return len(houses.keys())
