@@ -1,5 +1,6 @@
 import os
 import sys
+from typing import Callable
 
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.path.pardir, os.path.pardir))
 
@@ -10,19 +11,19 @@ def parse_input(input: str):
     return input.strip()
 
 
-def get_inputs():
+def get_inputs(parser: Callable):
     script_directory = os.path.dirname(os.path.realpath(__file__))
-    return [parse_input(line) for line in read_inputs(script_directory)]
+    return [parser(line) for line in read_inputs(script_directory)]
 
 
 def part_1(override_inputs = None):
-    inputs = override_inputs or get_inputs()
+    inputs = get_inputs(parse_input) if override_inputs is None else override_inputs
 
     return None
 
 
 def part_2(override_inputs = None):
-    inputs = override_inputs or get_inputs()
+    inputs = get_inputs(parse_input) if override_inputs is None else override_inputs
 
     return None
 

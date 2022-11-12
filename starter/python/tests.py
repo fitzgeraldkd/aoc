@@ -9,10 +9,10 @@ from day_XX.solution import part_1, part_2
 class TestBase(unittest.TestCase):
 
     def test_part_1(self):
-        self.assertEqual(part_1(), 0)
+        self.assertEqual(part_1(), None)
 
     def test_part_2(self):
-        self.assertEqual(part_2(), 0)
+        self.assertEqual(part_2(), None)
 
 
 class TestExamples(unittest.TestCase):
