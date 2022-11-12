@@ -66,10 +66,10 @@ class Interpreter:
         }
         toggled_index = self.index + self.registers.get(x, x)
         if toggled_index < len(self.instructions):
-            # self.instructions[toggled_index]['command'] = COMMANDS[self.instructions[toggled_index]['command']]
-            if not self.instructions[toggled_index]['toggled']:
-                print('UNTOGGLING')
-            self.instructions[toggled_index]['toggled'] = not self.instructions[toggled_index]['toggled']
+            self.instructions[toggled_index]['command'] = COMMANDS[self.instructions[toggled_index]['command']]
+            # if not self.instructions[toggled_index]['toggled']:
+            #     print('UNTOGGLING')
+            # self.instructions[toggled_index]['toggled'] = not self.instructions[toggled_index]['toggled']
         self.index += 1
 
     def run_command(self):
@@ -118,5 +118,5 @@ def part_2():
 
 
 if __name__ == '__main__':
-    # print('Part 1:', part_1())
+    print('Part 1:', part_1())
     print('Part 2:', part_2())
