@@ -6,6 +6,9 @@ import day_03.solution as day_03
 import day_04.solution as day_04
 import day_05.solution as day_05
 import day_06.solution as day_06
+import day_07.tests as day_07
+
+TEST_MODULES = [day_07]
 
 
 class Test2017Challenges(unittest.TestCase):
@@ -36,4 +39,13 @@ class Test2017Challenges(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    suite = unittest.TestSuite()
+    loader = unittest.TestLoader()
+
+    for test_module in TEST_MODULES:
+        suite.addTests(loader.loadTestsFromTestCase(test_module.TestBase))
+
+    runner = unittest.TextTestRunner()
+    result = runner.run(suite)
+
     unittest.main()
