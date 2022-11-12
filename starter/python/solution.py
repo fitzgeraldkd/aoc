@@ -16,14 +16,14 @@ def get_inputs():
     return inputs
 
 
-def part_1():
-    inputs = get_inputs()
+def part_1(override_inputs = None):
+    inputs = override_inputs or get_inputs()
 
     return None
 
 
-def part_2():
-    inputs = get_inputs()
+def part_2(override_inputs = None):
+    inputs = override_inputs or get_inputs()
 
     return None
 
