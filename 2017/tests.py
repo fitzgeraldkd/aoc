@@ -12,9 +12,12 @@ import day_09.tests as day_09
 import day_10.tests as day_10
 import day_11.tests as day_11
 import day_12.tests as day_12
+import day_13.tests as day_13
+import day_14.tests as day_14
+import day_15.tests as day_15
 
 TEST_MODULES = [
-    day_01, day_02, day_07, day_08, day_09, day_10, day_11, day_12
+    day_01, day_02, day_07, day_08, day_09, day_10, day_11, day_12, day_13, day_14, day_15
 ]
 
 
