@@ -56,8 +56,8 @@ def part_1(override_inputs: List[int] = None):
     return knot_list[0] * knot_list[1]
 
 
-def part_2(override_inputs: List[int] = None):
-    lengths = get_inputs(parse_input_ascii) if override_inputs is None else override_inputs
+def part_2(override_inputs: str = None):
+    lengths = get_inputs(parse_input_ascii) if override_inputs is None else parse_input_ascii(override_inputs)
     lengths.extend([17, 31, 73, 47, 23])
 
     knot_list = get_starting_list()
