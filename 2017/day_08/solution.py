@@ -25,7 +25,6 @@ def get_inputs():
 
 
 def check_condition(registers, condition):
-    print(condition)
     comparator = condition['comparator']
     if comparator == '>':
         return registers[condition['arguments'][0]] > condition['arguments'][1]

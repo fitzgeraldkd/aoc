@@ -8,9 +8,11 @@ from day_XX.solution import part_1, part_2
 
 class TestBase(unittest.TestCase):
 
+    @unittest.expectedFailure
     def test_part_1(self):
         self.assertEqual(part_1(), None)
 
+    @unittest.expectedFailure
     def test_part_2(self):
         self.assertEqual(part_2(), None)
 

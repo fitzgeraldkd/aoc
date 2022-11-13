@@ -14,7 +14,7 @@ class TestBase(unittest.TestCase):
         self.assertEqual(part_1(), 5946)
 
     def test_part_2(self):
-        self.assertEqual(part_2(), 0)
+        self.assertEqual(part_2(), 6026)
 
 
 class TestExamples(unittest.TestCase):
