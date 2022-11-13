@@ -2,20 +2,26 @@ import math
 import operator
 import os
 import sys
+from typing import List, Tuple
 
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.path.pardir, os.path.pardir))
 
 from classes.PriorityQueue import PriorityQueue
 
 
-DIRECTIONS = [
+DIRECTIONS: List[Tuple[int, int]] = [
     (1, 0),
     (0, 1),
     (-1, 0),
     (0, -1)
 ]
 
-def a_star(start: tuple, goal: tuple, get_is_wall, get_heuristic):
+
+def get_adjacent(position: Tuple[int, int]):
+    return [tuple(map(operator.add, position, direction)) for direction in DIRECTIONS]
+
+
+def a_star(start: Tuple[int, int], goal: Tuple[int, int], get_is_wall, get_heuristic):
     queue = PriorityQueue()
     previous = {}
     g_score = { start: 0 }
@@ -33,8 +39,8 @@ def a_star(start: tuple, goal: tuple, get_is_wall, get_heuristic):
                 node = previous[node]
             path.append(start)
             return path
-        
-        for neighbor in [tuple(map(operator.add, current, direction)) for direction in DIRECTIONS]:
+
+        for neighbor in get_adjacent(current):
             if get_is_wall(neighbor):
                 continue
             neighbor_g_score = g_score[current] + 1
