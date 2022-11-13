@@ -1,6 +1,7 @@
 import os
 import re
 import sys
+from typing import List
 
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.path.pardir, os.path.pardir))
 
@@ -17,8 +18,8 @@ def get_inputs():
     return inputs
 
 
-def part_1():
-    spreadsheet = get_inputs()
+def part_1(override_inputs: List[List[int]] = None):
+    spreadsheet = get_inputs() if override_inputs is None else override_inputs
     total = 0
 
     for row in spreadsheet:
@@ -27,7 +28,7 @@ def part_1():
     return total
 
 
-def get_row_result(row: list):
+def get_row_result(row: List[int]):
     sorted_row = sorted(row)
     while len(sorted_row) > 0:
         dividend = sorted_row.pop()
@@ -38,8 +39,8 @@ def get_row_result(row: list):
                 break
 
 
-def part_2():
-    spreadsheet = get_inputs()
+def part_2(override_inputs: List[List[int]] = None):
+    spreadsheet = get_inputs() if override_inputs is None else override_inputs
     total = 0
 
     for row in spreadsheet:

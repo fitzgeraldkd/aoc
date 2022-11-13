@@ -1,7 +1,7 @@
 import unittest
 
-import day_01.solution as day_01
-import day_02.solution as day_02
+import day_01.tests as day_01
+import day_02.tests as day_02
 import day_03.solution as day_03
 import day_04.solution as day_04
 import day_05.solution as day_05
@@ -13,18 +13,12 @@ import day_10.tests as day_10
 import day_11.tests as day_11
 import day_12.tests as day_12
 
-TEST_MODULES = [day_07, day_08, day_09, day_10, day_11, day_12]
+TEST_MODULES = [
+    day_01, day_02, day_07, day_08, day_09, day_10, day_11, day_12
+]
 
 
 class Test2017Challenges(unittest.TestCase):
-
-    def test_day_1(self):
-        self.assertEqual(day_01.part_1(), 1097)
-        self.assertEqual(day_01.part_2(), 1188)
-
-    def test_day_2(self):
-        self.assertEqual(day_02.part_1(), 42378)
-        self.assertEqual(day_02.part_2(), 246)
 
     def test_day_3(self):
         self.assertEqual(day_03.part_1(), 419)

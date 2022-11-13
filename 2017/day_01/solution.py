@@ -16,8 +16,8 @@ def get_inputs():
     return inputs[0]
 
 
-def part_1():
-    sequence = get_inputs()
+def part_1(override_inputs: str = None):
+    sequence = get_inputs() if override_inputs is None else override_inputs
     sequence = f'{sequence}{sequence[0]}'
     total = 0
     for index in range(len(sequence) - 1):
@@ -26,8 +26,8 @@ def part_1():
     return total
 
 
-def part_2():
-    sequence = get_inputs()
+def part_2(override_inputs: str = None):
+    sequence = get_inputs() if override_inputs is None else override_inputs
     total = 0
 
     for index in range(len(sequence)):
