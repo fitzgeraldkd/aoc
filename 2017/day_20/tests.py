@@ -12,9 +12,8 @@ class TestBase(unittest.TestCase):
     def test_part_1(self):
         self.assertEqual(part_1(), 243)
 
-    @unittest.expectedFailure
     def test_part_2(self):
-        self.assertEqual(part_2(), None)
+        self.assertEqual(part_2(), 648)
 
 
 class TestExamples(unittest.TestCase):

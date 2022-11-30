@@ -1,6 +1,7 @@
 import operator
 import os
 import sys
+from collections import defaultdict
 from typing import Callable
 
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.path.pardir, os.path.pardir))
@@ -23,23 +24,9 @@ class Particle:
     def get_distance(self):
         return sum(self.position)
 
-    def get_ticks_to_move_away(self):
-        ticks = []
-
-        for i in range(3):
-            p = self.position[i]
-            v = self.velocity[i]
-            a = self.acceleration[i]
-            # d = at^2 + vt + p
-            
-        return max(ticks)
-
     def move(self):
         previous_distance = self.get_distance()
-        # print('test')
-        # print(self.velocity)
         self.velocity = list(map(operator.add, self.velocity, self.acceleration))
-        # print(list(self.velocity))
         self.position = list(map(operator.add, self.position, self.velocity))
         if self.get_distance() > previous_distance:
             self.moving_closer = False
@@ -75,24 +62,21 @@ def part_1(override_inputs = None):
     
     return closest_particle.id
 
-    while any(particle.moving_closer for particle in particles):
-        for particle in particles:
-            particle.move()
-        # (particle.move() for particle in particles)
-        # print(particles[0].get_distance())
-        # print(particles[0].position)
-        print(len(list(filter(lambda p: p.moving_closer, particles))))
-        input()
-
-    return min(particles).id
-
-    return None
-
 
 def part_2(override_inputs = None):
     particles = get_inputs(parse_input) if override_inputs is None else override_inputs
 
-    return None
+    for _ in range(1000):
+        location_map = defaultdict(list)
+        for particle in particles:
+            particle.move()
+            location_map[''.join(str(coord) for coord in particle.position)].append(particle)
+        for location in location_map:
+            if len(location_map[location]) > 1:
+                for particle in location_map[location]:
+                    particles.remove(particle)
+
+    return len(particles)
 
 
 if __name__ == '__main__':
