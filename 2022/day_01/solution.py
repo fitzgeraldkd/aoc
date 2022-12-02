@@ -1,51 +1,28 @@
+import itertools
 import os
 import sys
-from typing import Callable
 
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.path.pardir, os.path.pardir))
 
 from utils.setup import read_inputs
 
 
-def parse_input(input: str):
-    return int(input.strip()) if input.strip() != '' else None
-
-
-def get_inputs(parser: Callable):
+def get_inputs():
     script_directory = os.path.dirname(os.path.realpath(__file__))
-    return [parser(line) for line in read_inputs(script_directory)]
+    raw_calorie_list = [line.strip() for line in read_inputs(script_directory)]
+    grouped_calorie_list = [list(y) for x, y in itertools.groupby(raw_calorie_list, lambda value: value == '') if not x]
+    converted_calorie_list = [sum(int(calorie) for calorie in elf) for elf in grouped_calorie_list]
+    return converted_calorie_list
 
 
 def part_1(override_inputs = None):
-    inputs = get_inputs(parse_input) if override_inputs is None else override_inputs
-    inputs.append(None)
-
-    this_sum = 0
-    max_sum = 0
-    for input in inputs:
-        if input is None:
-            max_sum = max(max_sum, this_sum)
-            this_sum = 0
-        else:
-            this_sum += input
-
-    return max_sum
+    elves = get_inputs() if override_inputs is None else override_inputs
+    return max(elves)
 
 
 def part_2(override_inputs = None):
-    inputs = get_inputs(parse_input) if override_inputs is None else override_inputs
-    inputs.append(None)
-
-    this_sum = 0
-    sums = []
-    for input in inputs:
-        if input is None:
-            sums.append(this_sum)
-            this_sum = 0
-        else:
-            this_sum += input
-
-    return sum(sorted(sums, reverse=True)[:3])
+    elves = get_inputs() if override_inputs is None else override_inputs
+    return sum(sorted(elves, reverse=True)[:3])
 
 
 if __name__ == '__main__':
