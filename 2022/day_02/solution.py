@@ -15,8 +15,11 @@ def get_inputs(parser: Callable):
     script_directory = os.path.dirname(os.path.realpath(__file__))
     return [parser(line) for line in read_inputs(script_directory)]
 
+WIN = 6
+DRAW = 3
+LOSE = 0
 
-POINTS = {
+MOVE_POINTS = {
     'A': 1,
     'B': 2,
     'C': 3,
@@ -25,66 +28,47 @@ POINTS = {
     'Z': 3,
 }
 
-DRAW = {
-    'A': 'X',
-    'B': 'Y',
-    'C': 'Z'
-}
-
-WIN = {
-    'Y': 'A',
-    'Z': 'B',
-    'X': 'C'
-}
 
 def part_1(override_inputs = None):
-    inputs = get_inputs(parse_input) if override_inputs is None else override_inputs
+    rounds = get_inputs(parse_input) if override_inputs is None else override_inputs
 
-    scores = [0, 0]
+    outcome_points = {
+        'A': {
+            'X': DRAW,
+            'Y': WIN,
+            'Z': LOSE
+        },
+        'B': {
+            'X': LOSE,
+            'Y': DRAW,
+            'Z': WIN
+        },
+        'C': {
+            'X': WIN,
+            'Y': LOSE,
+            'Z': DRAW
+        }
+    }
 
-    for input in inputs:
-        scores[0] += POINTS[input[0]]
-        scores[1] += POINTS[input[1]]
-        if DRAW[input[0]] == input[1]:
-            scores[0] += 3
-            scores[1] += 3
-        elif WIN[input[1]] == input[0]:
-            scores[1] += 6
-        else:
-            scores[0] += 6
+    return sum(MOVE_POINTS[me] + outcome_points[elf][me] for elf, me in rounds)
 
-    return scores[1]
-
-LOSE_2 = {
-    'A': 'Z',
-    'B': 'X',
-    'C': 'Y'
-}
-
-WIN_2 = {
-    'A': 'Y',
-    'B': 'Z',
-    'C': 'X'
-}
 
 def part_2(override_inputs = None):
-    inputs = get_inputs(parse_input) if override_inputs is None else override_inputs
-    output = 0
+    rounds = get_inputs(parse_input) if override_inputs is None else override_inputs
 
-    for input in inputs:
-        elf = input[0]
-        if input[1] == 'X':
-            me = LOSE_2[elf]
-            output += POINTS[me]
-        elif input[1] == 'Y':
-            me = elf
-            output += POINTS[me]
-            output += 3
-        else:
-            me = WIN_2[elf]
-            output += POINTS[me] + 6
+    outcome_points = {
+        'X': LOSE,
+        'Y': DRAW,
+        'Z': WIN
+    }
 
-    return output
+    offset = {
+        'X': 2,
+        'Y': 0,
+        'Z': 1
+    }
+
+    return sum((MOVE_POINTS[elf] + offset[outcome] - 1) % 3 + 1 + outcome_points[outcome] for elf, outcome in rounds)
 
 
 if __name__ == '__main__':
