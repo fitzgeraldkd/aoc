@@ -17,8 +17,8 @@ def get_inputs():
     return inputs[0]
 
 
-def part_1():
-    tile = get_inputs()
+def part_1(override_inputs: int = None):
+    tile = get_inputs() if override_inputs is None else override_inputs
 
     next_root = math.ceil(math.sqrt(tile))
     prev_root = next_root - 1
@@ -39,8 +39,8 @@ def part_1():
     return distance
 
 
-def part_2():
-    value = get_inputs()
+def part_2(override_inputs: int = None):
+    value = get_inputs() if override_inputs is None else override_inputs
 
     grid = { 0: { 0: 1 } }
 

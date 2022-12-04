@@ -3,21 +3,20 @@ import sys
 
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.path.pardir, os.path.pardir))
 
+from utils.setup import read_inputs
+
 
 def parse_input(input: str):
     return input.strip().split(' ')
 
 
 def get_inputs():
-    script_dir = os.path.dirname(os.path.realpath(__file__))
-    file = open(f'{script_dir}/inputs.txt')
-    inputs = [parse_input(line) for line in file.readlines()]
-    file.close()
-    return inputs
+    script_directory = os.path.dirname(os.path.realpath(__file__))
+    return [parse_input(line) for line in read_inputs(script_directory)]
 
 
-def part_1():
-    passphrases = get_inputs()
+def part_1(override_inputs: list = None):
+    passphrases = get_inputs() if override_inputs is None else override_inputs
     valid_count = 0
 
     for passphrase in passphrases:
@@ -27,8 +26,8 @@ def part_1():
     return valid_count
 
 
-def part_2():
-    passphrases = get_inputs()
+def part_2(override_inputs: list = None):
+    passphrases = get_inputs() if override_inputs is None else override_inputs
     valid_count = 0
 
     for passphrase in passphrases:
