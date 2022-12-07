@@ -1,6 +1,5 @@
 import os
 import sys
-from collections import Counter
 from typing import Callable
 
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.path.pardir, os.path.pardir))
@@ -18,7 +17,7 @@ def get_inputs(parser: Callable):
 
 
 def is_marker(characters: str):
-    return len(characters) == len(Counter(characters))
+    return len(characters) == len(set(characters))
 
 
 def part_1(override_inputs = None):
