@@ -21,29 +21,16 @@ def get_inputs(parser: Callable):
 def get_directory_sizes(lines: List[str]):
     directory_stack = []
     directory_sizes = defaultdict(int)
-    index = 0
 
-    while index < len(lines):
-        line = lines[index]
-        cmd = line.split()[1]
+    for line in lines:
 
-        if cmd == 'cd':
+        if line[0] == '$' and line.split()[1] == 'cd':
             dir = line.split()[-1]
             directory_stack.pop() if dir == '..' else directory_stack.append(dir)
-            index += 1
 
-        elif cmd == 'ls':
-            index += 1
-
-            # Break in case this is the last command and the directory is empty.
-            if index >= len(lines):
-                break
-
-            while index < len(lines) and lines[index][0] != '$':
-                if re.match(r'\d', lines[index]):
-                    for i in range(0, len(directory_stack)):
-                        directory_sizes['/'.join(directory_stack[:i + 1])] += int(lines[index].split()[0])
-                index += 1
+        elif re.match(r'\d', line):
+            for i in range(0, len(directory_stack)):
+                directory_sizes['/'.join(directory_stack[:i + 1])] += int(line.split()[0])
 
     return directory_sizes
 
