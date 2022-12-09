@@ -9,7 +9,7 @@ from day_21.solution import part_1, part_2
 class TestBase(unittest.TestCase):
 
     def test_part_1(self):
-        self.assertEqual(part_1(), None)
+        self.assertEqual(part_1(), 734820)
 
     def test_part_2(self):
         self.assertEqual(part_2(), 193170338541590)
@@ -18,7 +18,7 @@ class TestBase(unittest.TestCase):
 class TestExamples(unittest.TestCase):
 
     def test_part_1(self):
-        self.assertEqual(part_1([4, 8]), None)
+        self.assertEqual(part_1([4, 8]), 739785)
 
     def test_part_2(self):
         self.assertEqual(part_2([4, 8]), 444356092776315)

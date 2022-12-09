@@ -18,9 +18,23 @@ def get_inputs(parser: Callable):
 
 
 def part_1(override_inputs = None):
-    player_1, player_2 = get_inputs(parse_input) if override_inputs is None else override_inputs
+    positions = get_inputs(parse_input) if override_inputs is None else override_inputs
+    scores = [0, 0]
+    target_score = 1000
+    rolls = 0
+    current_player = 0
+    current_roll = 1
 
-    return None
+    while max(scores) < target_score:
+        for _ in range(3):
+            positions[current_player] = (positions[current_player] + current_roll - 1) % 10 + 1
+            current_roll = (current_roll % 100) + 1
+            rolls += 1
+        scores[current_player] += positions[current_player]
+
+        current_player = 1 if current_player == 0 else 0
+
+    return min(scores) * rolls
 
 
 def part_2(override_inputs = None):
