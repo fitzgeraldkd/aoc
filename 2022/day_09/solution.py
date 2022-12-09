@@ -70,25 +70,17 @@ def part_2(override_inputs = None):
         for _ in range(distance):
             new_rope = []
             for i in range(len(rope) - 1):
-                head = rope[i]
                 tail = rope[i + 1]
                 if i == 0:
-                    new_head = tuple(map(operator.add, head, DIRECTION_MAP[direction]))
+                    new_head = tuple(map(operator.add, rope[i], DIRECTION_MAP[direction]))
                     new_rope.append(new_head)
                 else:
                     new_head = new_rope[i]
                 delta_x = abs(new_head[0] - tail[0])
                 delta_y = abs(new_head[1] - tail[1])
-                if (delta_x > 1 or delta_y > 1) and min(delta_x, delta_y) == 0:
-                    step_x = int((new_head[0] - tail[0]) / delta_x) if delta_x else 0
-                    step_y = int((new_head[1] - tail[1]) / delta_y) if delta_y else 0
-                    new_position = tuple(map(operator.add, tail, (step_x, step_y)))
-                    new_rope.append(new_position)
-                    if i == len(rope) - 2:
-                        tail_visited[new_position] = True
-                elif delta_x + delta_y > 2:
-                    step_x = int((new_head[0] - tail[0]) / delta_x)
-                    step_y = int((new_head[1] - tail[1]) / delta_y)
+                if delta_x > 1 or delta_y > 1 or delta_x + delta_y > 2:
+                    step_x = (new_head[0] - tail[0]) // delta_x if delta_x else 0
+                    step_y = (new_head[1] - tail[1]) // delta_y if delta_y else 0
                     new_position = tuple(map(operator.add, tail, (step_x, step_y)))
                     new_rope.append(new_position)
                     if i == len(rope) - 2:
