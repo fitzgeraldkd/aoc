@@ -32,13 +32,11 @@ def get_locations(layout):
 def part_1():
     layout = get_inputs()
     locations = get_locations(layout)
-    print(locations)
     pairings = list(itertools.combinations(locations, 2))
-    print(pairings)
 
-    def get_is_wall(coords: tuple):
+    def get_is_wall(coords: tuple, **kwargs):
         return layout[coords[1]][coords[0]] == '#'
-    
+
     def get_heuristic(start: tuple, goal: tuple):
         return abs(start[0] - goal[0]) + abs(start[1] - goal[1])
 
@@ -53,10 +51,9 @@ def part_1():
             distances[pairing[1]][pairing[0]] = distance
         else:
             distances[pairing[1]] = { pairing[0]: distance }
-    
+
     start = locations.pop('0')
     routes = list(itertools.permutations(locations))
-    print(routes)
 
     min_route = ''
     min_distance = math.inf
@@ -69,20 +66,17 @@ def part_1():
         min_distance = min(distance, min_distance)
         min_route = route
 
-    print(min_route)
     return min_distance
 
 
 def part_2():
     layout = get_inputs()
     locations = get_locations(layout)
-    print(locations)
     pairings = list(itertools.combinations(locations, 2))
-    print(pairings)
 
-    def get_is_wall(coords: tuple):
+    def get_is_wall(coords: tuple, **kwargs):
         return layout[coords[1]][coords[0]] == '#'
-    
+
     def get_heuristic(start: tuple, goal: tuple):
         return abs(start[0] - goal[0]) + abs(start[1] - goal[1])
 
@@ -97,10 +91,9 @@ def part_2():
             distances[pairing[1]][pairing[0]] = distance
         else:
             distances[pairing[1]] = { pairing[0]: distance }
-    
+
     start = locations.pop('0')
     routes = list(itertools.permutations(locations))
-    print(routes)
 
     min_route = ''
     min_distance = math.inf
@@ -114,7 +107,6 @@ def part_2():
         min_distance = min(distance, min_distance)
         min_route = route
 
-    print(min_route)
     return min_distance
 
 

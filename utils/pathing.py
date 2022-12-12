@@ -41,7 +41,7 @@ def a_star(start: Tuple[int, int], goal: Tuple[int, int], get_is_wall, get_heuri
             return path
 
         for neighbor in get_adjacent(current):
-            if get_is_wall(neighbor):
+            if get_is_wall(neighbor, current=current):
                 continue
             neighbor_g_score = g_score[current] + 1
             if neighbor_g_score < g_score.get(neighbor, math.inf):

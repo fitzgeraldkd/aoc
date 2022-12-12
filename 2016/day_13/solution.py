@@ -18,7 +18,7 @@ def get_inputs():
     return inputs[0]
 
 
-def get_is_wall(location: tuple):
+def get_is_wall(location: tuple, **kwargs):
     x, y = location
     if min(x, y) < 0:
         return True
@@ -55,7 +55,7 @@ def part_2():
                     locations.add(neighbor)
                     neighbors.add(neighbor)
         nodes = neighbors
-    
+
     return len(locations)
 
 
