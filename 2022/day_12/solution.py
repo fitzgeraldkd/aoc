@@ -5,7 +5,7 @@ from typing import Callable
 
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.path.pardir, os.path.pardir))
 
-from utils.pathing import a_star
+from utils.pathing import a_star, get_adjacent, get_manhattan_distance
 from utils.setup import read_inputs
 from utils.constants import ALPHABET
 
@@ -19,12 +19,12 @@ def get_inputs(parser: Callable):
     return [parser(line) for line in read_inputs(script_directory)]
 
 
-def get_heuristic(location: tuple, goal: tuple):
-    return abs(location[0] - goal[0]) + abs(location[1] - goal[1])
+def is_in_boundaries(coords, grid):
+    return min(coords) >= 0 and coords[0] < len(grid[0]) and coords[1] < len(grid)
 
 
 def get_is_wall(neighbor, current, grid):
-    if neighbor[0] < 0 or neighbor[1] < 0 or neighbor[0] >= len(grid[0]) or neighbor[1] >= len(grid):
+    if not is_in_boundaries(neighbor, grid):
         return True
     return ALPHABET.index(grid[neighbor[1]][neighbor[0]]) > ALPHABET.index(grid[current[1]][current[0]]) + 1
 
@@ -46,41 +46,48 @@ def part_1(override_inputs = None):
 
     is_wall = lambda neighbor, current: get_is_wall(neighbor, current, grid)
 
-    return len(a_star(start, end, is_wall, get_heuristic)) - 1
+    return len(a_star(start, end, is_wall, get_heuristic=get_manhattan_distance)) - 1
 
 
 def part_2(override_inputs = None):
-    """
-    Possible optimization: Sort the possible_starts list by distance from goal (largest first). For any other potential
-    start point along the way, their optimal path will have already been determined.
-
-    Also, if a point has no possible path to the goal, all adjacent points of the same elevation will not be possible.
-    """
     grid = get_inputs(parse_input) if override_inputs is None else override_inputs
 
     end = None
-    possible_starts = []
+    possible_starts = set()
 
     for y, row in enumerate(grid):
         for x, cell in enumerate(row):
             if cell == 'S':
-                possible_starts.append((x, y))
+                possible_starts.add((x, y))
                 grid[y][x] = 'a'
             elif cell == 'E':
                 end = (x, y)
                 grid[y][x] = 'z'
             elif cell == 'a':
-                possible_starts.append((x, y))
+                possible_starts.add((x, y))
 
     is_wall = lambda neighbor, current: get_is_wall(neighbor, current, grid)
 
-    shortest_path = math.inf
-    for start in possible_starts:
-        path = a_star(start, end, is_wall, get_heuristic)
-        if path:
-            shortest_path = min(shortest_path, len(path) - 1)
+    possible_paths = {}
 
-    return shortest_path
+    def discard_adjacent(coords):
+        for adjacent in get_adjacent(coords):
+            if is_in_boundaries(adjacent, grid) and adjacent in possible_starts and adjacent not in possible_paths:
+                possible_paths[adjacent] = math.inf
+                discard_adjacent(adjacent)
+
+    for start in possible_starts:
+        if start not in possible_paths:
+            path = a_star(start, end, is_wall, get_heuristic=get_manhattan_distance)
+            if path is not None:
+                possible_paths[start] = len(path)
+                for index, node in [(index, node) for index, node in enumerate(path) if node in possible_starts]:
+                    possible_paths[node] = index + 1
+            else:
+                possible_paths[start] = math.inf
+                discard_adjacent(start)
+
+    return min(possible_paths.values()) - 1
 
 
 if __name__ == '__main__':

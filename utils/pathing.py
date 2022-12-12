@@ -21,6 +21,10 @@ def get_adjacent(position: Tuple[int, int]):
     return [tuple(map(operator.add, position, direction)) for direction in DIRECTIONS]
 
 
+def get_manhattan_distance(point_a, point_b):
+    return sum(abs(vector) for vector in map(operator.sub, point_a, point_b))
+
+
 def a_star(start: Tuple[int, int], goal: Tuple[int, int], get_is_wall, get_heuristic):
     queue = PriorityQueue()
     previous = {}
