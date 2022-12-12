@@ -11,8 +11,9 @@ import day_08.tests as day_08
 import day_09.tests as day_09
 import day_10.tests as day_10
 import day_11.tests as day_11
+import day_12.tests as day_12
 
-TEST_MODULES = [day_01, day_02, day_03, day_04, day_05, day_06, day_07, day_08, day_09, day_10, day_11]
+TEST_MODULES = [day_01, day_02, day_03, day_04, day_05, day_06, day_07, day_08, day_09, day_10, day_11, day_12]
 
 if __name__ == '__main__':
     suite = unittest.TestSuite()
