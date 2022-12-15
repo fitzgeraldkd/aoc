@@ -21,6 +21,16 @@ def get_adjacent(position: Tuple[int, int]):
     return [tuple(map(operator.add, position, direction)) for direction in DIRECTIONS]
 
 
+def get_direction(start: Tuple[int, int], end: Tuple[int, int]):
+    if start[0] < end[0]:
+        return DIRECTIONS[0]
+    elif start[1] < end[1]:
+        return DIRECTIONS[1]
+    elif start[0] > end[0]:
+        return DIRECTIONS[2]
+    elif start[1] > end[1]:
+        return DIRECTIONS[3]
+
 def get_manhattan_distance(point_a, point_b):
     return sum(abs(vector) for vector in map(operator.sub, point_a, point_b))
 

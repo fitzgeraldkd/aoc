@@ -82,10 +82,8 @@ def part_2(override_inputs = None):
 
     for row in range(1, lowest_floor + 2):
         for x in range(SAND_ORIGIN[0] - row, SAND_ORIGIN[0] + row + 1):
-            if board[(x, row)] is not None:
-                continue
             points_above = [(x, row - 1), (x - 1, row - 1), (x + 1, row - 1)]
-            if any(board[point] == 'O' for point in points_above):
+            if board[(x, row)] is None and any(board[point] == 'O' for point in points_above):
                 board[(x, row)] = 'O'
                 grains_added += 1
 

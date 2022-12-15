@@ -1,3 +1,4 @@
+import json
 import os
 import sys
 from typing import Callable
@@ -9,7 +10,7 @@ from utils.setup import read_inputs
 
 
 def parse_input(input: str):
-    return [eval(line.strip()) for line in input]
+    return [json.loads(line.strip()) for line in input]
 
 
 def get_inputs(parser: Callable):
