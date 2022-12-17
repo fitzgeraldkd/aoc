@@ -6,7 +6,7 @@ from classes.PriorityQueue import PriorityQueue
 class Graph:
     def __init__(self):
         self.nodes = {}
-    
+
     def add_node(self, id):
         if id not in self.nodes:
             self.nodes[id] = Node(id)
@@ -15,37 +15,29 @@ class Graph:
         self.nodes[start].add_neighbor(end, weight)
         if not directional:
             self.nodes[end].add_neighbor(start, weight)
-    
-    def shortest_distance(self, start, end):
-        for neighbor in self.nodes[start].adjacent.keys():
-            if neighbor == end:
-                return self.nodes[start].adjacent[end]
-        pass
 
     def dijkstra(self, start):
-        dist = { start: 0 }
-        prev = {}
-        queue = PriorityQueue()
+        D = {self.nodes[v].id: float('inf') for v in self.nodes}
+        D[start] = 0
+        prev = set()
 
-        for node in self.nodes:
-            if node.id != start:
-                dist[node.id] = math.inf
-                prev[node.id] = None
-            queue.add_item(node.id, dist[node.id])
-        
-        while not queue.is_empty():
-            node = queue.pop()
-            neighbors = self.nodes[node].adjacent
-            for neighbor_id in neighbors.keys():
-                if not queue.has_item(neighbor_id):
-                    continue
-                neighbor_distance = dist[node] + neighbors[neighbor_id]
-                if neighbor_distance < dist[neighbor_id]:
-                    dist[neighbor_id] = neighbor_distance
-                    prev[neighbor_id] = node.id
-                    queue.update_priority(neighbor_id, neighbor_distance)
-        
-        return dist
+        pq = PriorityQueue()
+        pq.add_item((0, start), 0)
+
+        while not pq.is_empty():
+            (dist, current_vertex) = pq.pop()
+            prev.add(current_vertex)
+
+            for neighbor in self.nodes:
+                if neighbor in self.nodes[current_vertex].adjacent.keys():
+                    distance = self.nodes[current_vertex].adjacent[neighbor]
+                    if neighbor not in prev:
+                        old_cost = D[neighbor]
+                        new_cost = D[current_vertex] + distance
+                        if new_cost < old_cost:
+                            pq.add_item((new_cost, neighbor), new_cost)
+                            D[neighbor] = new_cost
+        return D
 
 
 class Node:
