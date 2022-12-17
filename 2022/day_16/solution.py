@@ -1,7 +1,7 @@
 import math
 import os
 import sys
-from tqdm import tqdm, trange
+from tqdm import tqdm
 from typing import Callable
 
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.path.pardir, os.path.pardir))
@@ -60,7 +60,7 @@ def calc_relieved(valves_with_flow, path, time=0):
     return relieved
 
 
-def get_max_relieved(valves_with_flow, current_path, time=0):
+def get_max_relieved(valves_with_flow, current_path, progress: tqdm, time=0):
     for i in range(len(current_path) - 1):
         time += valves_with_flow[current_path[i]]['adjacent'][current_path[i + 1]] + 1
 
@@ -68,16 +68,22 @@ def get_max_relieved(valves_with_flow, current_path, time=0):
     available_valves = list(filter(lambda valve: valve not in current_path and is_in_range(valve), valves_with_flow))
 
     if len(available_valves) == 0:
+        progress.update(math.factorial(len(valves_with_flow) - len(current_path)))
         return calc_relieved(valves_with_flow, current_path)
     else:
-        return max([get_max_relieved(valves_with_flow, [*current_path, valve]) for valve in available_valves])
+        return max([get_max_relieved(valves_with_flow, [*current_path, valve], progress) for valve in available_valves])
 
 
 def part_1(override_inputs = None):
     valves = get_inputs(parse_input) if override_inputs is None else override_inputs
     valves_with_flow = get_valves_with_flow(valves)
 
-    return get_max_relieved(valves_with_flow, ['AA'])
+    # TODO: Fix progress bar, only gets to about 45% complete.
+    progress = tqdm(total=math.factorial(len(valves_with_flow) - 1), **get_tqdm_kwargs(__file__, 1))
+    max_relieved = get_max_relieved(valves_with_flow, ['AA'], progress)
+    progress.close()
+
+    return max_relieved
 
 
 def part_2(override_inputs = None):
