@@ -35,7 +35,7 @@ def get_manhattan_distance(point_a, point_b):
     return sum(abs(vector) for vector in map(operator.sub, point_a, point_b))
 
 
-def a_star(start: Tuple[int, int], goal: Tuple[int, int], get_is_wall, get_heuristic):
+def a_star(start: Tuple[int, int], goal: Tuple[int, int], get_is_wall, get_heuristic, progress=None):
     queue = PriorityQueue()
     previous = {}
     g_score = { start: 0 }
@@ -66,3 +66,6 @@ def a_star(start: Tuple[int, int], goal: Tuple[int, int], get_is_wall, get_heuri
                     queue.update_priority(neighbor, f_score[neighbor])
                 else:
                     queue.add_item(neighbor, f_score[neighbor])
+
+        if progress is not None:
+            progress.update()
