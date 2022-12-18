@@ -2,7 +2,7 @@ import math
 import os
 import sys
 from tqdm import tqdm
-from typing import Callable
+from typing import Callable, List
 
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.path.pardir, os.path.pardir))
 
@@ -48,31 +48,50 @@ def get_valves_with_flow(valves):
     return valves_with_flow
 
 
-def calc_relieved(valves_with_flow, path, time=0):
+def calc_relieved(valves_with_flow, paths, initial_time=0):
     relieved = 0
-    for i in range(len(path) - 1):
-        delta_time = valves_with_flow[path[i]]['adjacent'][path[i + 1]] + 1
-        time += delta_time
-        relieved += sum(valves_with_flow[valve]['flow'] for valve in path[:i+1]) * delta_time
 
-    relieved += (30 - time) * sum(valves_with_flow[valve]['flow'] for valve in path)
+    for path in paths:
+        time = initial_time
+        for i in range(len(path) - 1):
+            delta_time = valves_with_flow[path[i]]['adjacent'][path[i + 1]] + 1
+            time += delta_time
+            relieved += sum(valves_with_flow[valve]['flow'] for valve in path[:i+1]) * delta_time
+
+        relieved += (30 - time) * sum(valves_with_flow[valve]['flow'] for valve in path)
 
     return relieved
 
 
-def get_max_relieved(valves_with_flow, current_path, progress: tqdm, time=0):
+def get_time(valves_with_flow, path):
+    if len(path) <= 1:
+        return 0
+    return sum(valves_with_flow[path[i]]['adjacent'][path[i + 1]] + 1 for i in range(len(path) - 1))
+
+
+def get_max_relieved(valves_with_flow, current_paths: List[List[str]], progress: tqdm, initial_time=0):
+    current_path_index = min((index for index in range(len(current_paths))),
+                             key=lambda index: get_time(valves_with_flow, current_paths[index]))
+    current_path = current_paths[current_path_index]
+
+    time = initial_time
     for i in range(len(current_path) - 1):
         time += valves_with_flow[current_path[i]]['adjacent'][current_path[i + 1]] + 1
 
+    open_valves = set(valve for path in current_paths for valve in path)
     is_in_range = lambda valve: time + valves_with_flow[current_path[-1]]['adjacent'][valve] < 30
-    available_valves = list(filter(lambda valve: valve not in current_path and is_in_range(valve), valves_with_flow))
+    available_valves = list(filter(lambda valve: valve not in open_valves and is_in_range(valve), valves_with_flow))
 
     if len(available_valves) == 0:
-        progress.update(math.factorial(len(valves_with_flow) - len(current_path)))
-        return calc_relieved(valves_with_flow, current_path)
+        progress.update(math.factorial(len(valves_with_flow) - len(open_valves)))
+        return calc_relieved(valves_with_flow, current_paths, initial_time)
     else:
-        return max([get_max_relieved(valves_with_flow, [*current_path, valve], progress) for valve in available_valves])
-
+        relieved = []
+        for valve in available_valves:
+            sub_paths = [[*path] for path in current_paths]
+            sub_paths[current_path_index] = [*current_path, valve]
+            relieved.append(get_max_relieved(valves_with_flow, sub_paths, progress, initial_time))
+        return max(relieved)
 
 def part_1(override_inputs = None):
     valves = get_inputs(parse_input) if override_inputs is None else override_inputs
@@ -80,20 +99,21 @@ def part_1(override_inputs = None):
 
     # TODO: Fix progress bar, only gets to about 45% complete.
     progress = tqdm(total=math.factorial(len(valves_with_flow) - 1), **get_tqdm_kwargs(__file__, 1))
-    max_relieved = get_max_relieved(valves_with_flow, ['AA'], progress)
+    max_relieved = get_max_relieved(valves_with_flow, [['AA']], progress)
     progress.close()
 
     return max_relieved
 
 
 def part_2(override_inputs = None):
-    inputs = get_inputs(parse_input) if override_inputs is None else override_inputs
-    output = None
+    valves = get_inputs(parse_input) if override_inputs is None else override_inputs
+    valves_with_flow = get_valves_with_flow(valves)
 
-    for input in tqdm(inputs):
-        pass
+    progress = tqdm(total=math.factorial(len(valves_with_flow) - 1), **get_tqdm_kwargs(__file__, 1))
+    max_relieved = get_max_relieved(valves_with_flow, [['AA'], ['AA']], progress, initial_time=4)
+    progress.close()
 
-    return output
+    return max_relieved
 
 
 if __name__ == '__main__':

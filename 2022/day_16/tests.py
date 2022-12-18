@@ -15,8 +15,10 @@ class TestBase(unittest.TestCase):
     def test_part_1(self):
         self.assertEqual(part_1(), 1641)
 
+    # Takes over 20 minutes to execute.
+    @unittest.skip
     def test_part_2(self):
-        self.assertEqual(part_2(), None)
+        self.assertEqual(part_2(), 2261)
 
 
 class TestExamples(unittest.TestCase):
@@ -26,7 +28,6 @@ class TestExamples(unittest.TestCase):
         self.assertEqual(part_1(), 1651)
 
     @patch('day_16.solution.read_inputs', return_value=read_inputs(CURRENT_DIRECTORY, 'sample.txt'))
-    @unittest.expectedFailure
     def test_part_2(self, mocked_read_inputs):
         self.assertEqual(part_2(), 1707)
 
