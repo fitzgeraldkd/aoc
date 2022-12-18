@@ -16,9 +16,22 @@ DIRECTIONS: List[Tuple[int, int]] = [
     (0, -1)
 ]
 
+DIRECTIONS_3D: List[Tuple[int, int, int]] = [
+    (1, 0, 0),
+    (0, 1, 0),
+    (0, 0, 1),
+    (-1, 0, 0),
+    (0, -1, 0),
+    (0, 0, -1)
+]
+
 
 def get_adjacent(position: Tuple[int, int]):
     return [tuple(map(operator.add, position, direction)) for direction in DIRECTIONS]
+
+
+def get_adjacent_3d(position: Tuple[int, int, int]):
+    return [tuple(map(operator.add, position, direction)) for direction in DIRECTIONS_3D]
 
 
 def get_direction(start: Tuple[int, int], end: Tuple[int, int]):
