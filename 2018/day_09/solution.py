@@ -22,10 +22,9 @@ def part_1(override_inputs = None):
 
     scores = [0 for _ in range(players)]
     current_player = 0
-    next_marble = 1
     current_index = 0
     marbles = [0]
-    while next_marble < points:
+    for next_marble in range(1, points + 1):
         if next_marble % 23 == 0:
             index_to_pop = (current_index - 7) % len(marbles)
             scores[current_player] += next_marble + marbles.pop(index_to_pop)
@@ -35,7 +34,6 @@ def part_1(override_inputs = None):
             marbles.insert(new_index, next_marble)
             current_index = new_index
 
-        next_marble += 1
         current_player = (current_player + 1) % players
 
     return max(scores)
@@ -49,10 +47,9 @@ def part_2(override_inputs = None):
 
     scores = [0 for _ in range(players)]
     current_player = 0
-    next_marble = 1
     current_index = 0
     marbles = [0]
-    while next_marble < points:
+    for next_marble in range(1, points + 1):
         if next_marble % 23 == 0:
             index_to_pop = (current_index - 7) % len(marbles)
             scores[current_player] += next_marble + marbles.pop(index_to_pop)
@@ -62,7 +59,6 @@ def part_2(override_inputs = None):
             marbles.insert(new_index, next_marble)
             current_index = new_index
 
-        next_marble += 1
         current_player = (current_player + 1) % players
 
     return max(scores)
