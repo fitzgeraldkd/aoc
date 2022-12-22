@@ -18,10 +18,11 @@ import day_15.tests as day_15
 import day_16.tests as day_16
 import day_17.tests as day_17
 import day_18.tests as day_18
+import day_19.tests as day_19
 import day_20.tests as day_20
 
 TEST_MODULES = [day_01, day_02, day_03, day_04, day_05, day_06, day_07, day_08, day_09, day_10,
-                day_11, day_12, day_13, day_14, day_15, day_16, day_17, day_18, day_20]
+                day_11, day_12, day_13, day_14, day_15, day_16, day_17, day_18, day_19, day_20]
 
 if __name__ == '__main__':
     suite = unittest.TestSuite()

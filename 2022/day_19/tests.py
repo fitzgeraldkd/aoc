@@ -1,29 +1,35 @@
 import unittest
 import os
 import sys
+from unittest.mock import patch
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.path.pardir))
 
 from day_19.solution import get_available_robots, get_blueprint, part_1, part_2
+from utils.setup import read_inputs
+
+CURRENT_DIRECTORY = os.path.dirname(os.path.realpath(__file__))
 
 
 class TestBase(unittest.TestCase):
 
     @unittest.skip
     def test_part_1(self):
-        self.assertEqual(part_1(), None)
+        self.assertEqual(part_1(), 2301)
 
     @unittest.skip
     def test_part_2(self):
-        self.assertEqual(part_2(), None)
+        self.assertEqual(part_2(), 10336)
 
 
 class TestExamples(unittest.TestCase):
 
-    def test_part_1(self):
+    @patch('day_19.solution.read_inputs', return_value=read_inputs(CURRENT_DIRECTORY, 'sample.txt'))
+    def test_part_1(self, mocked_read_inputs):
         self.assertEqual(part_1(), 33)
 
-    def test_part_2(self):
-        self.assertEqual(part_2(), None)
+    @patch('day_19.solution.read_inputs', return_value=read_inputs(CURRENT_DIRECTORY, 'sample.txt'))
+    def test_part_2(self, mocked_read_inputs):
+        self.assertEqual(part_2(), 3472)
 
 
 class TestUtils(unittest.TestCase):
