@@ -4,6 +4,7 @@ from typing import Callable
 
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.path.pardir, os.path.pardir))
 
+from classes.LinkedList import DoublyLinkedList
 from utils.setup import read_inputs
 
 
@@ -17,51 +18,30 @@ def get_inputs(parser: Callable):
     return [parser(line) for line in read_inputs(script_directory)][0]
 
 
-def part_1(override_inputs = None):
-    players, points = get_inputs(parse_input) if override_inputs is None else override_inputs
-
+def get_max_score(players: int, points: int):
     scores = [0 for _ in range(players)]
     current_player = 0
-    current_index = 0
-    marbles = [0]
+    current_marble = DoublyLinkedList(0, close_loop=True)
+
     for next_marble in range(1, points + 1):
         if next_marble % 23 == 0:
-            index_to_pop = (current_index - 7) % len(marbles)
-            scores[current_player] += next_marble + marbles.pop(index_to_pop)
-            current_index = index_to_pop % len(marbles)
+            current_marble = current_marble.prev.prev.prev.prev.prev.prev
+            scores[current_player] += next_marble + current_marble.prev.remove()
         else:
-            new_index = (current_index + 2) % len(marbles)
-            marbles.insert(new_index, next_marble)
-            current_index = new_index
-
+            current_marble = current_marble.next.append(next_marble)
         current_player = (current_player + 1) % players
 
     return max(scores)
+
+
+def part_1(override_inputs = None):
+    players, points = get_inputs(parse_input) if override_inputs is None else override_inputs
+    return get_max_score(players, points)
 
 
 def part_2(override_inputs = None):
-    # TODO: Does not solve in a reasonable time.
-    return None
     players, points = get_inputs(parse_input) if override_inputs is None else override_inputs
-    points *= 100
-
-    scores = [0 for _ in range(players)]
-    current_player = 0
-    current_index = 0
-    marbles = [0]
-    for next_marble in range(1, points + 1):
-        if next_marble % 23 == 0:
-            index_to_pop = (current_index - 7) % len(marbles)
-            scores[current_player] += next_marble + marbles.pop(index_to_pop)
-            current_index = index_to_pop % len(marbles)
-        else:
-            new_index = (current_index + 2) % len(marbles)
-            marbles.insert(new_index, next_marble)
-            current_index = new_index
-
-        current_player = (current_player + 1) % players
-
-    return max(scores)
+    return get_max_score(players, points * 100)
 
 
 if __name__ == '__main__':

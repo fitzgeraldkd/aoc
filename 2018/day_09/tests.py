@@ -11,9 +11,8 @@ class TestBase(unittest.TestCase):
     def test_part_1(self):
         self.assertEqual(part_1(), 418237)
 
-    @unittest.skip
     def test_part_2(self):
-        self.assertEqual(part_2(), None)
+        self.assertEqual(part_2(), 3505711612)
 
 
 class TestExamples(unittest.TestCase):
@@ -22,7 +21,6 @@ class TestExamples(unittest.TestCase):
         self.assertEqual(part_1([9, 25]), 32)
         self.assertEqual(part_1([10, 1618]), 8317)
         self.assertEqual(part_1([13, 7999]), 146373)
-        # TODO: Fix this assertion.
         self.assertEqual(part_1([17, 1104]), 2764)
         self.assertEqual(part_1([21, 6111]), 54718)
         self.assertEqual(part_1([30, 5807]), 37305)
