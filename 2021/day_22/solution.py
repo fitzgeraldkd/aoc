@@ -86,15 +86,20 @@ def subtract_clusters(cluster_a: List[List[int]], cluster_b: List[List[int]]):
         else:
             # Extrude.
             extrusion_axis = [cluster_b[i][0] >= cluster_a[i][0] and cluster_b[i][1] <= cluster_a[i][1] for i in range(3)].index(False)
+            print('cluster_a')
+            print(cluster_a)
             coordinate_bounds = [[*bound] for bound in cluster_a]
             for axis in range(3):
-                if axis != extrusion_axis:
-                    coordinate_bounds[axis] = [cluster_b[axis][0], cluster_b[axis][1]]
+                # if axis != extrusion_axis:
+                    coordinate_bounds[axis] = [max(coordinate_bounds[axis][0], cluster_b[axis][0]),
+                                               min(coordinate_bounds[axis][1], cluster_b[axis][1])]
                     boundary_overrides = [
                         [cluster_a[axis][0], coordinate_bounds[axis][0] - 1],
                         [coordinate_bounds[axis][1] + 1, cluster_a[axis][1]]
                     ]
-
+                    print('boundary_overrides', boundary_overrides)
+                    print('coordinate_bounds', coordinate_bounds)
+                    print('cluster_a', cluster_a)
                     for boundary_override in boundary_overrides:
                         if boundary_override[0] <= boundary_override[1]:
                             new_subcluster = [[*bound] for bound in coordinate_bounds]
@@ -135,7 +140,7 @@ def subtract_clusters(cluster_a: List[List[int]], cluster_b: List[List[int]]):
              [cluster_b[1][0], cluster_b[1][1]],
              [cluster_b[2][0], cluster_b[2][1]]]
         ])
-    print(clusters)
+    print('clusters', clusters)
     return clusters
 
 

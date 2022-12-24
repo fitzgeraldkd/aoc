@@ -323,7 +323,7 @@ class TestUtils(unittest.TestCase):
             [[-19, 19], [40, 40], [-60, 60]]
         ])
 
-        # Extrude so that there are two non-adjacent clusters.
+        # Extrude so that there are two non-adjacent clusters remaining.
         self.assertCountEqual(subtract_clusters(base_cluster, [[-10, 10], [-50, 50], [-70, 70]]), [
             [[-20, -11], [-40, 40], [-60, 60]],
             [[11, 20], [-40, 40], [-60, 60]],
