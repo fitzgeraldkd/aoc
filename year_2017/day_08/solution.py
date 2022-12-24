@@ -1,5 +1,4 @@
 from collections import defaultdict
-import os
 
 from utils.setup import read_inputs
 
@@ -17,8 +16,7 @@ def parse_input(input: str):
 
 
 def get_inputs():
-    script_directory = os.path.dirname(os.path.realpath(__file__))
-    return [parse_input(line) for line in read_inputs(script_directory)]
+    return [parse_input(line) for line in read_inputs(__file__)]
 
 
 def check_condition(registers, condition):

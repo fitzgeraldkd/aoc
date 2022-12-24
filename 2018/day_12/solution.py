@@ -13,12 +13,11 @@ def parse_input(input: str):
 
 
 def get_inputs(parser: Callable):
-    script_directory = os.path.dirname(os.path.realpath(__file__))
-    initial_state, notes = split(read_inputs(script_directory), '\n')
+    initial_state, notes = split(read_inputs(__file__), '\n')
     notes = [note.split(' => ') for note in notes]
     plants = { item for index, item in enumerate(initial_state.split(': ')[1]) if item == '#' }
     notes = { pattern: output for pattern, output in notes }
-    return [parser(line) for line in read_inputs(script_directory)]
+    return [parser(line) for line in read_inputs(__file__)]
 
 
 def part_1(override_inputs = None):

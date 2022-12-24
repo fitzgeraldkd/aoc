@@ -1,6 +1,5 @@
 from collections import defaultdict
 import operator
-import os
 from typing import Callable
 
 from utils.setup import read_inputs
@@ -34,8 +33,7 @@ def parse_input(input: str, id: int):
 
 
 def get_inputs(parser: Callable):
-    script_directory = os.path.dirname(os.path.realpath(__file__))
-    return [parser(line, id) for id, line in enumerate(read_inputs(script_directory))]
+    return [parser(line, id) for id, line in enumerate(read_inputs(__file__))]
 
 
 def part_1(override_inputs = None):

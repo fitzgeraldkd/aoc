@@ -15,19 +15,17 @@ def parse_input(input: str):
 
 
 def get_inputs(parser: Callable):
-    script_directory = os.path.dirname(os.path.realpath(__file__))
     board = {}
     for coord in [(0, 0), (1, 0), (2, 1), (2, 2), (3, 0), (4, 1), (4, 2), (5, 0), (6, 1), (6, 2), (7, 0), (8, 1),
                   (8, 2), (9, 0), (10, 0)]:
         board[coord] = None
-    for y, line in enumerate(read_inputs(script_directory)[2:4], start=1):
+    for y, line in enumerate(read_inputs(__file__)[2:4], start=1):
         for x, amphipod in enumerate(line[3:10:2]):
             board[(2 + 2 * x, y)] = amphipod
     return {
         'board': board,
         'energy': 0
     }
-    return [parser(line) for line in read_inputs(script_directory)]
 
 
 def get_available_positions(state: dict, location: tuple):

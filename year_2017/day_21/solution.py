@@ -1,4 +1,3 @@
-import os
 from typing import Callable, List
 
 from utils.setup import read_inputs
@@ -38,8 +37,7 @@ def parse_input(input: str):
 
 
 def get_inputs(parser: Callable):
-    script_directory = os.path.dirname(os.path.realpath(__file__))
-    return [parser(line) for line in read_inputs(script_directory)]
+    return [parser(line) for line in read_inputs(__file__)]
 
 
 def get_rule_map(rules: List[List[List[str]]]):

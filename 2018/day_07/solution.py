@@ -19,8 +19,7 @@ def parse_input(input: str):
 
 
 def get_inputs(parser: Callable):
-    script_directory = os.path.dirname(os.path.realpath(__file__))
-    return [parser(line) for line in read_inputs(script_directory)]
+    return [parser(line) for line in read_inputs(__file__)]
 
 
 def part_1(override_inputs = None):
@@ -32,8 +31,8 @@ def part_1(override_inputs = None):
 
     for prerequisite, dependent in instructions:
         commands[dependent].add(prerequisite)
-        remaining.add(prerequisite) 
-        remaining.add(dependent) 
+        remaining.add(prerequisite)
+        remaining.add(dependent)
 
     remaining = sorted(list(remaining))
 
@@ -56,8 +55,8 @@ def part_2(override_inputs = None):
 
     for prerequisite, dependent in instructions:
         commands[dependent].add(prerequisite)
-        remaining.add(prerequisite) 
-        remaining.add(dependent) 
+        remaining.add(prerequisite)
+        remaining.add(dependent)
 
     working = set()
     ready = []
@@ -90,7 +89,7 @@ def part_2(override_inputs = None):
             available_workers = PART_2_WORKERS - len(workers)
             commands_to_start = ready[:available_workers]
             workers.extend([
-                {'command': command, 'time': current_time + PART_2_BASE_TIME + ALPHABET.index(command.lower()) + 1} 
+                {'command': command, 'time': current_time + PART_2_BASE_TIME + ALPHABET.index(command.lower()) + 1}
                 for command in commands_to_start])
             ready = ready[available_workers:]
             [working.add(command) for command in commands_to_start]

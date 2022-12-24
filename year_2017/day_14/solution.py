@@ -1,4 +1,3 @@
-import os
 from typing import Callable
 
 from utils.numbers import get_padded_binary
@@ -12,8 +11,7 @@ def parse_input(input: str):
 
 
 def get_inputs(parser: Callable) -> str:
-    script_directory = os.path.dirname(os.path.realpath(__file__))
-    return [parser(line) for line in read_inputs(script_directory)][0]
+    return [parser(line) for line in read_inputs(__file__)][0]
 
 
 def get_grid(key: str):

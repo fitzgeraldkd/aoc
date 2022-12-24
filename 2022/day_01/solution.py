@@ -8,8 +8,7 @@ from utils.setup import read_inputs
 
 
 def get_inputs():
-    script_directory = os.path.dirname(os.path.realpath(__file__))
-    raw_calorie_list = [line.strip() for line in read_inputs(script_directory)]
+    raw_calorie_list = [line.strip() for line in read_inputs(__file__)]
     grouped_calorie_list = [list(y) for x, y in itertools.groupby(raw_calorie_list, lambda value: value == '') if not x]
     converted_calorie_list = [sum(int(calorie) for calorie in elf) for elf in grouped_calorie_list]
     return converted_calorie_list

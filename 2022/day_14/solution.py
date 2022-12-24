@@ -18,8 +18,7 @@ def parse_input(input: str):
 
 def get_inputs(parser: Callable):
     rocks = defaultdict(lambda: None)
-    script_directory = os.path.dirname(os.path.realpath(__file__))
-    for line in read_inputs(script_directory):
+    for line in read_inputs(__file__):
         str_coords = line.split(' -> ')
         coords = [tuple(int(coord) for coord in pair.split(',')) for pair in str_coords]
         for i in range(len(coords) - 1):

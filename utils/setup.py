@@ -9,9 +9,10 @@ def get_tqdm_kwargs(file: str, part: int, disable=False):
     }
 
 
-def read_inputs(script_directory: str, filename='inputs.txt'):
+def read_inputs(file: str, filename='inputs.txt'):
+    script_directory = os.path.dirname(os.path.realpath(file))
 
-    with open(f'{script_directory}/{filename}') as file:
-        lines = file.readlines()
+    with open(f'{script_directory}/{filename}') as inputs:
+        lines = inputs.readlines()
 
     return lines

@@ -14,8 +14,7 @@ def parse_input(input: str):
 
 
 def get_inputs(parser: Callable):
-    script_directory = os.path.dirname(os.path.realpath(__file__))
-    grouped = split(read_inputs(script_directory), '\n')
+    grouped = split(read_inputs(__file__), '\n')
     return [parser(line) for line in grouped]
 
 
