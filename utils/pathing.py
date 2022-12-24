@@ -48,6 +48,15 @@ def get_manhattan_distance(point_a, point_b):
     return sum(abs(vector) for vector in map(operator.sub, point_a, point_b))
 
 
+def rotate(facing, rotation):
+    direction_index = DIRECTIONS.index(facing)
+    if rotation == 'R':
+        new_index = (direction_index + 1) % len(DIRECTIONS)
+    else:
+        new_index = (direction_index - 1) % len(DIRECTIONS)
+    return DIRECTIONS[new_index]
+
+
 def a_star(start: Tuple[int, int], goal: Tuple[int, int], get_is_wall, get_heuristic, progress=None):
     queue = PriorityQueue()
     previous = {}
