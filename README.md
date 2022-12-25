@@ -30,7 +30,7 @@ Here's my repo for my [Advent of Code](https://adventofcode.com/) solutions. Mos
 | Day 22 | 🟡 🟡 | 🔵 🟠 | 🟢 🟢 | ⚪️ ⚪️ | ⚪️ ⚪️ | ⚪️ ⚪️ | ⚪️ ⚪️ | ⚪️ ⚪️ |
 | Day 23 | 🔵 🔵 | 🔵 🟡 | 🟢 🟡 | ⚪️ ⚪️ | ⚪️ ⚪️ | ⚪️ ⚪️ | ⚪️ ⚪️ | 🟢 🟢 |
 | Day 24 | 🟡 🔵 | 🔵 🔵 | 🟡 🟡 | ⚪️ ⚪️ | ⚪️ ⚪️ | ⚪️ ⚪️ | ⚪️ ⚪️ | 🟢 🟡 |
-| Day 25 | 🔵 🟢 | 🔵 🟢 | 🟢 🟢 | ⚪️ ⚪️ | ⚪️ ⚪️ | ⚪️ ⚪️ | ⚪️ ⚪️ | ⚪️ ⚪️ |
+| Day 25 | 🔵 🟢 | 🔵 🟢 | 🟢 🟢 | ⚪️ ⚪️ | ⚪️ ⚪️ | ⚪️ ⚪️ | ⚪️ ⚪️ | 🟢 🟢 |
 
 *Note: I'm leaving 2021 marked as not started for now until I migrate my JS solutions to Python.*
 
