@@ -1,8 +1,8 @@
 import math
-import os
 import re
 
 from classes.Graph import Graph
+from utils.setup import read_inputs
 
 
 def parse_input(input: str):
@@ -15,27 +15,23 @@ def parse_input(input: str):
 
 
 def get_inputs():
-    script_dir = os.path.dirname(os.path.realpath(__file__))
-    file = open(f'{script_dir}/inputs.txt')
-    inputs = [parse_input(line) for line in file.readlines()]
-    file.close()
-    return inputs
+    return [parse_input(line) for line in read_inputs(__file__)]
 
 
-def get_distances(graph, start: str, previous_key: str = '', distances = {}, remaining_nodes: set = set()):
+def get_distances(graph, start: str, previous_key: tuple, distances, remaining_nodes: set):
     previous_distance = distances[previous_key] if previous_key in distances else 0
 
     for node in graph.nodes[start].adjacent.keys():
         if node not in remaining_nodes:
             continue
 
-        key = f'{previous_key}{" -> " if previous_key else ""}{node}'
+        key = (*previous_key, node)
 
         distances[key] = previous_distance + graph.nodes[start].adjacent[node]
 
         sub_remaining_nodes = remaining_nodes.copy()
         sub_remaining_nodes.remove(node)
-        get_distances(graph, node, key, distances, sub_remaining_nodes)
+        get_distances(graph, start=node, previous_key=key, distances=distances, remaining_nodes=sub_remaining_nodes)
 
     return distances
 
@@ -43,19 +39,23 @@ def get_distances(graph, start: str, previous_key: str = '', distances = {}, rem
 def part_1():
     inputs = get_inputs()
     graph = Graph()
+    locations = set()
 
     for input in inputs:
+        locations.add(input['start'])
+        locations.add(input['end'])
         graph.add_node(input['start'])
         graph.add_node(input['end'])
         graph.connect_nodes(input['start'], input['end'], input['distance'])
 
     distances = {}
     for node in graph.nodes.keys():
-        distances = get_distances(graph, node, node, distances, remaining_nodes=set(filter(lambda n: n != node, graph.nodes.keys())))
+        distances = get_distances(graph, start=node, previous_key=(node, ), distances=distances,
+                                  remaining_nodes=set(filter(lambda n: n != node, graph.nodes.keys())))
 
     min_distance = math.inf
     for key in distances.keys():
-        if len(key) == 89 and distances[key] < min_distance:
+        if len(key) == len(locations) and distances[key] < min_distance:
             min_distance = distances[key]
 
     return min_distance
@@ -64,19 +64,23 @@ def part_1():
 def part_2():
     inputs = get_inputs()
     graph = Graph()
+    locations = set()
 
     for input in inputs:
+        locations.add(input['start'])
+        locations.add(input['end'])
         graph.add_node(input['start'])
         graph.add_node(input['end'])
         graph.connect_nodes(input['start'], input['end'], input['distance'])
 
     distances = {}
     for node in graph.nodes.keys():
-        distances = get_distances(graph, node, node, distances, remaining_nodes=set(filter(lambda n: n != node, graph.nodes.keys())))
+        distances = get_distances(graph, start=node, previous_key=(node, ), distances=distances,
+                                  remaining_nodes=set(filter(lambda n: n != node, graph.nodes.keys())))
 
     max_distance = 0
     for key in distances.keys():
-        if len(key) == 89 and distances[key] > max_distance:
+        if len(key) == len(locations) and distances[key] > max_distance:
             max_distance = distances[key]
 
     return max_distance

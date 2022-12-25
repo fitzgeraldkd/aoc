@@ -1,5 +1,6 @@
-import os
 import re
+
+from utils.setup import read_inputs
 
 
 def parse_input(input: str):
@@ -7,36 +8,18 @@ def parse_input(input: str):
 
 
 def get_inputs():
-    script_dir = os.path.dirname(os.path.realpath(__file__))
-    file = open(f'{script_dir}/inputs.txt')
-    inputs = [parse_input(line) for line in file.readlines()]
-    file.close()
-
-    return inputs
+    return [parse_input(line) for line in read_inputs(__file__)]
 
 
 def part_1():
     inputs = get_inputs()
-
-    sum = 0
-    for input in inputs:
-        code = len(input)
-        memory = code - 2 - len(re.findall(r'(\\\\|\\\")', input)) - 3 * len(re.findall(r'\\x[0-9a-f]{2}', input))
-        sum += code - memory
-
-    return sum
+    return sum(2 + len(re.findall(r'(\\\\|\\\")', input)) + 3 * len(re.findall(r'\\x[0-9a-f]{2}', input))
+               for input in inputs)
 
 
 def part_2():
     inputs = get_inputs()
-
-    sum = 0
-    for input in inputs:
-        code = len(input)
-        encoded = code + 2 + len(re.findall(r'(\\|\")', input))
-        sum += encoded - code
-
-    return sum
+    return sum(2 + len(re.findall(r'(\\|\")', input)) for input in inputs)
 
 
 if __name__ == '__main__':

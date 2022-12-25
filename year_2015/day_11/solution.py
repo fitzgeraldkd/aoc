@@ -1,5 +1,6 @@
-import os
 import re
+
+from utils.setup import read_inputs
 
 
 def parse_input(input: str):
@@ -7,11 +8,7 @@ def parse_input(input: str):
 
 
 def get_inputs():
-    script_dir = os.path.dirname(os.path.realpath(__file__))
-    file = open(f'{script_dir}/inputs.txt')
-    inputs = [parse_input(line) for line in file.readlines()]
-    file.close()
-    return inputs[0]
+    return [parse_input(line) for line in read_inputs(__file__)][0]
 
 
 def increment_character(input):
@@ -37,12 +34,12 @@ def replace_illegal_characters(input):
     return output
 
 def passes_rules(input):
-    if re.match(r'[ilo]', input):
+    if re.search(r'[ilo]', input):
         return False
 
     if len(set(re.findall(r'([a-z])\1', input))) < 2:
         return False
-    
+
     previous_char = input[0]
     streak = 0
     for char in input[1:]:
@@ -50,12 +47,12 @@ def passes_rules(input):
             streak += 1
         else:
             streak = 0
-        
+
         if streak == 2:
             return True
-        
+
         previous_char = char
-    
+
     return False
 
 

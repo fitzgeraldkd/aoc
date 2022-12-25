@@ -31,38 +31,6 @@ TEST_MODULES = [day_01, day_02, day_03, day_04, day_05]
 
 class Test2015Challenges(unittest.TestCase):
 
-    def test_day_6(self):
-        self.assertEqual(day_06.part_1(), 569999)
-        self.assertEqual(day_06.part_2(), 17836115)
-
-    def test_day_7(self):
-        self.assertEqual(day_07.part_1(), 3176)
-        self.assertEqual(day_07.part_2(), 14710)
-
-    def test_day_8(self):
-        self.assertEqual(day_08.part_1(), 1333)
-        self.assertEqual(day_08.part_2(), 2046)
-
-    def test_day_9(self):
-        self.assertEqual(day_09.part_1(), 251)
-        self.assertEqual(day_09.part_2(), 898)
-
-    def test_day_10(self):
-        self.assertEqual(day_10.part_1(), 329356)
-        self.assertEqual(day_10.part_2(), 4666278)
-
-    def test_day_11(self):
-        self.assertEqual(day_11.part_1(), 'cqjxxyzz')
-        self.assertEqual(day_11.part_2(), 'cqkaabcc')
-
-    def test_day_12(self):
-        self.assertEqual(day_12.part_1(), 119433)
-        self.assertEqual(day_12.part_2(), 68466)
-
-    def test_day_13(self):
-        self.assertEqual(day_13.part_1(), 709)
-        self.assertEqual(day_13.part_2(), 668)
-
     def test_day_14(self):
         self.assertEqual(day_14.part_1(), 2640)
         self.assertEqual(day_14.part_2(), 1102)
