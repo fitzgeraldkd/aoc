@@ -1,4 +1,7 @@
-import os
+from utils.setup import read_inputs
+
+
+STEPS = 100
 
 
 def parse_input(input: str):
@@ -6,11 +9,7 @@ def parse_input(input: str):
 
 
 def get_inputs():
-    script_dir = os.path.dirname(os.path.realpath(__file__))
-    file = open(f'{script_dir}/inputs.txt')
-    inputs = [parse_input(line) for line in file.readlines()]
-    file.close()
-    return inputs
+    return [parse_input(line) for line in read_inputs(__file__)]
 
 
 def count_neighbors(grid):
@@ -52,14 +51,14 @@ def count_lights(grid):
 
     for row in grid:
         count += len(list(filter(None, row)))
-    
+
     return count
 
 
 def part_1():
     grid = get_inputs()
 
-    for _ in range(100):
+    for _ in range(STEPS):
         neighbors = count_neighbors(grid)
         for y, row in enumerate(grid):
             for x, _ in enumerate(row):
@@ -76,7 +75,7 @@ def part_2():
     grid[len(grid) - 1][0] = True
     grid[len(grid) - 1][len(grid[0]) - 1] = True
 
-    for _ in range(100):
+    for _ in range(STEPS):
         neighbors = count_neighbors(grid)
         for y, row in enumerate(grid):
             for x, _ in enumerate(row):

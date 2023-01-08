@@ -2,10 +2,10 @@ import copy
 import json
 
 from classes.PriorityQueue import PriorityQueue
+from utils.setup import read_inputs
 
 
 PLAYER = { 'hp': 50, 'mp': 500 }
-BOSS = { 'hp': 51, 'damage': 9 }
 
 SPELLS = [
     { 'name': 'Magic Missile', 'cost': 53, 'damage': 4, 'heal': 0, 'effect': None },
@@ -23,7 +23,11 @@ EFFECTS = {
 
 
 def get_inputs():
-    return BOSS
+    stats = [int(line.strip().split(' ')[-1]) for line in read_inputs(__file__)]
+    return {
+        'hp': stats[0],
+        'damage': stats[1]
+    }
 
 
 def run_effects(game_state):

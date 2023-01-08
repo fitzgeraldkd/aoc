@@ -1,4 +1,4 @@
-import os
+from utils.setup import read_inputs
 
 
 def parse_input(input: str):
@@ -7,11 +7,7 @@ def parse_input(input: str):
 
 
 def get_inputs():
-    script_dir = os.path.dirname(os.path.realpath(__file__))
-    file = open(f'{script_dir}/inputs.txt')
-    inputs = [parse_input(line) for line in file.readlines()]
-    file.close()
-    return inputs
+    return [parse_input(line) for line in read_inputs(__file__)]
 
 
 def get_actions():
@@ -25,26 +21,26 @@ def get_actions():
     def triple(registers, arguments):
         registers[arguments[0]] *= 3
         return 1
-    
+
     def increment(registers, arguments):
         registers[arguments[0]] += 1
         return 1
-    
+
     def jump(registers, arguments):
         return _parse_offset(arguments[0])
-    
+
     def jump_if_even(registers, arguments):
         if registers[arguments[0]] % 2 == 0:
             return _parse_offset(arguments[1])
         else:
             return 1
-    
+
     def jump_if_one(registers, arguments):
         if registers[arguments[0]] == 1:
             return _parse_offset(arguments[1])
         else:
             return 1
-    
+
     return {
         'hlf': half,
         'tpl': triple,

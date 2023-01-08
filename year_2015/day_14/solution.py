@@ -1,4 +1,7 @@
-import os
+from utils.setup import read_inputs
+
+
+RACE_DURATION = 2503
 
 
 def parse_input(input: str):
@@ -16,11 +19,7 @@ def parse_input(input: str):
 
 
 def get_inputs():
-    script_dir = os.path.dirname(os.path.realpath(__file__))
-    file = open(f'{script_dir}/inputs.txt')
-    inputs = [parse_input(line) for line in file.readlines()]
-    file.close()
-    return inputs
+    return [parse_input(line) for line in read_inputs(__file__)]
 
 
 def get_distance(reindeer, time):
@@ -41,7 +40,7 @@ def is_resting(reindeer, time):
 def part_1():
     inputs = get_inputs()
 
-    distances = [get_distance(reindeer, 2503) for reindeer in inputs]
+    distances = [get_distance(reindeer, RACE_DURATION) for reindeer in inputs]
 
     return max(distances)
 
@@ -54,12 +53,12 @@ def part_2():
     for reindeer in inputs:
         point_map[reindeer['name']] = 0
         position_map[reindeer['name']] = 0
-    
-    for time in range(2503):
+
+    for time in range(RACE_DURATION):
         for reindeer in inputs:
             if not is_resting(reindeer, time):
                 position_map[reindeer['name']] += reindeer['speed']
-        
+
         leading_distance = 0
         leading_reindeer = []
         for reindeer in inputs:

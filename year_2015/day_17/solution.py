@@ -1,4 +1,7 @@
-import os
+from utils.setup import read_inputs
+
+
+TARGET_VOLUME = 150
 
 
 def parse_input(input: str):
@@ -6,11 +9,7 @@ def parse_input(input: str):
 
 
 def get_inputs():
-    script_dir = os.path.dirname(os.path.realpath(__file__))
-    file = open(f'{script_dir}/inputs.txt')
-    inputs = [parse_input(line) for line in file.readlines()]
-    file.close()
-    return inputs
+    return [parse_input(line) for line in read_inputs(__file__)]
 
 
 def count_permutations(containers, target, depth, solutions):
@@ -31,7 +30,7 @@ def count_permutations(containers, target, depth, solutions):
 def part_1():
     inputs = get_inputs()
 
-    solutions = count_permutations(inputs, 150, 1, {})
+    solutions = count_permutations(inputs, TARGET_VOLUME, 1, {})
 
     return sum(solutions.values())
 
@@ -39,7 +38,7 @@ def part_1():
 def part_2():
     inputs = get_inputs()
 
-    solutions = count_permutations(inputs, 150, 1, {})
+    solutions = count_permutations(inputs, TARGET_VOLUME, 1, {})
 
     return solutions[min(solutions.keys())]
 

@@ -1,5 +1,6 @@
 from functools import reduce
-import os
+
+from utils.setup import read_inputs
 
 
 def parse_input(input: str):
@@ -16,14 +17,7 @@ def parse_input(input: str):
 
 
 def get_inputs():
-    script_dir = os.path.dirname(os.path.realpath(__file__))
-    file = open(f'{script_dir}/inputs.txt')
-    inputs = [parse_input(line) for line in file.readlines()]
-    file.close()
-    ingredients = {}
-    for ingredient in inputs:
-        ingredients[ingredient[0]] = ingredient[1]
-    return ingredients
+    return { ingredient[0]: ingredient[1] for ingredient in [parse_input(line) for line in read_inputs(__file__)]}
 
 
 def calculate_score(ingredients, amounts):
@@ -45,7 +39,7 @@ def optimize_ingredient(ingredients, ingredient, amounts):
     previous_score = calculate_score(ingredients, amounts)
 
     for ingredient_to_remove in filter(lambda name: name != ingredient, ingredients.keys()):
-        
+
         while calculate_score(ingredients, amounts) >= previous_score and amounts[ingredient_to_remove] > 1:
             previous_score = calculate_score(ingredients, amounts)
             amounts[ingredient] += 1
@@ -66,9 +60,9 @@ def part_1():
     ingredient_names = list(ingredients.keys())
     amounts = {}
 
-    for ingredient in ingredient_names:
-        # Assumes 4 ingredients.
-        amounts[ingredient] = 25
+    for ingredient in ingredient_names[:-1]:
+        amounts[ingredient] = 100 // len(ingredients)
+    amounts[ingredient_names[-1]] = 100 - sum(amounts.values())
 
     previous_score = 0
 

@@ -1,12 +1,8 @@
-import os
+from utils.setup import read_inputs
 
 
 def get_inputs():
-    script_dir = os.path.dirname(os.path.realpath(__file__))
-    file = open(f'{script_dir}/inputs.txt')
-    inputs = file.read()
-    file.close()
-    return inputs
+    return [line.strip() for line in read_inputs(__file__)][0]
 
 
 def part_1(override_inputs: str = None):
@@ -24,7 +20,6 @@ def part_2(override_inputs: str = None):
         current_floor += 1 if input == '(' else -1
         if current_floor < 0:
             return index + 1
-    return None
 
 
 if __name__ == '__main__':

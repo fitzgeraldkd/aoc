@@ -1,20 +1,17 @@
 import hashlib
-import os
+
+from utils.setup import read_inputs
 
 
 def hash(input: str):
     return hashlib.md5(input.encode('utf-8')).hexdigest()
 
-def parse_input(input):
-    return input
+def parse_input(input: str):
+    return input.strip()
 
 
 def get_inputs():
-    script_dir = os.path.dirname(os.path.realpath(__file__))
-    file = open(f'{script_dir}/inputs.txt')
-    inputs = [parse_input(line) for line in file.readlines()]
-    file.close()
-    return inputs[0]
+    return [parse_input(line) for line in read_inputs(__file__)][0]
 
 
 def part_1(override_inputs: str = None):
@@ -25,8 +22,6 @@ def part_1(override_inputs: str = None):
         if hashed.startswith('00000'):
             return i
 
-    return None
-
 
 def part_2(override_inputs: str = None):
     inputs = override_inputs or get_inputs()
@@ -35,8 +30,6 @@ def part_2(override_inputs: str = None):
         hashed = hash(f'{inputs}{i}')
         if hashed.startswith('000000'):
             return i
-
-    return None
 
 
 if __name__ == '__main__':

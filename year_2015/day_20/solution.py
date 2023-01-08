@@ -1,5 +1,6 @@
 import math
-import os
+
+from utils.setup import read_inputs
 
 
 def parse_input(input: str):
@@ -7,11 +8,7 @@ def parse_input(input: str):
 
 
 def get_inputs():
-    script_dir = os.path.dirname(os.path.realpath(__file__))
-    file = open(f'{script_dir}/inputs.txt')
-    inputs = [parse_input(line) for line in file.readlines()]
-    file.close()
-    return inputs[0]
+    return [parse_input(line) for line in read_inputs(__file__)][0]
 
 
 def part_1():

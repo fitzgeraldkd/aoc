@@ -1,6 +1,8 @@
 import itertools
 import math
 
+from utils.setup import read_inputs
+
 
 WEAPONS = [
     { 'name': 'Dagger', 'cost': 8, 'damage': 4, 'armor': 0 },
@@ -29,10 +31,11 @@ RINGS = [
 
 
 def get_inputs():
+    stats = [int(line.strip().split(' ')[-1]) for line in read_inputs(__file__)]
     return {
-        'hp': 109,
-        'damage': 8,
-        'armor': 2
+        'hp': stats[0],
+        'damage': stats[1],
+        'armor': stats[2]
     }
 
 
