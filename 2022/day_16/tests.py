@@ -7,7 +7,7 @@ sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pat
 from day_16.solution import part_1, part_2
 from utils.setup import read_inputs
 
-CURRENT_DIRECTORY = os.path.dirname(os.path.realpath(__file__))
+CURRENT_DIRECTORY = os.path.realpath(__file__)
 
 
 class TestBase(unittest.TestCase):

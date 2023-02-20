@@ -3,7 +3,7 @@ import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.path.pardir))
 
-from day_XX.solution import part_1, part_2
+from day_22.solution import part_1, part_2
 
 
 class TestBase(unittest.TestCase):
