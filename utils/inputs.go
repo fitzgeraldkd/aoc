@@ -3,7 +3,6 @@ package utils
 import (
 	"bufio"
 	"os"
-	"strconv"
 	"strings"
 )
 
@@ -27,12 +26,7 @@ func GetLines(filepath string) []string {
 
 func GetIntLines(filepath string) []int {
 	lines := GetLines(filepath)
-	intLines := make([]int, len(lines))
-	for i, line := range lines {
-		value, _ := strconv.Atoi(line)
-		intLines[i] = value
-	}
-	return intLines
+	return StringSliceToInt(lines)
 }
 
 func GetCSV(filepath string) []string {
@@ -45,10 +39,5 @@ func GetCSV(filepath string) []string {
 
 func GetIntCSV(filepath string) []int {
 	stringValues := GetCSV(filepath)
-	intValues := make([]int, len(stringValues))
-	for i, value := range stringValues {
-		intValue, _ := strconv.Atoi(value)
-		intValues[i] = intValue
-	}
-	return intValues
+	return StringSliceToInt(stringValues)
 }

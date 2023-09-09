@@ -1,8 +1,6 @@
 package aoc_20XX_XX
 
 import (
-	"fmt"
-
 	utils "github.com/fitzgeraldkd/aoc/utils"
 )
 
@@ -11,13 +9,11 @@ func getInputs(filepath string) []int {
 }
 
 func Part1(filepath string) int {
-	inputs := getInputs(filepath)
-	fmt.Println(inputs)
+	// inputs := getInputs(filepath)
 	return -1
 }
 
 func Part2(filepath string) int {
-	inputs := getInputs(filepath)
-	fmt.Println(inputs)
+	// inputs := getInputs(filepath)
 	return -1
 }

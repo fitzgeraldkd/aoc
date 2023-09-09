@@ -16,3 +16,15 @@ func AssertListEqual[T []string | []int](t *testing.T, answer T, expected T) {
 		t.Error("\nReceived:", answer, "\nExpected:", expected)
 	}
 }
+
+func AssertFalse(t *testing.T, answer bool) {
+	if answer {
+		t.Error("\nReceived:", answer, "\nExpected:", false)
+	}
+}
+
+func AssertTrue(t *testing.T, answer bool) {
+	if !answer {
+		t.Error("\nReceived:", answer, "\nExpected:", true)
+	}
+}
