@@ -4,7 +4,7 @@ import sys
 from unittest.mock import patch
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.path.pardir))
 
-from day_22.solution import (count_cubes, get_verteces, is_point_in_cluster, part_1, part_2, split_cluster_at_verteces,
+from year_2021.day_22.solution import (count_cubes, get_verteces, is_point_in_cluster, part_1, part_2, split_cluster_at_verteces,
                              subtract_clusters)
 
 
@@ -25,14 +25,14 @@ class TestExamples(unittest.TestCase):
         sample_steps = [
             'on x=0..4,y=0..4,z=0..4'
         ]
-        with patch('day_22.solution.read_inputs', return_value=sample_steps):
+        with patch('year_2021.day_22.solution.read_inputs', return_value=sample_steps):
             self.assertEqual(part_1(), 125)
 
         # Test turning off a single cluster.
         sample_steps = [
             'off x=0..4,y=0..4,z=0..4'
         ]
-        with patch('day_22.solution.read_inputs', return_value=sample_steps):
+        with patch('year_2021.day_22.solution.read_inputs', return_value=sample_steps):
             self.assertEqual(part_1(), 0)
 
         # Test adding two non-intersecting clusters.
@@ -40,9 +40,9 @@ class TestExamples(unittest.TestCase):
             'on x=0..4,y=0..4,z=0..4',
             'on x=10..14,y=0..4,z=0..4',
         ]
-        with patch('day_22.solution.read_inputs', return_value=sample_steps):
+        with patch('year_2021.day_22.solution.read_inputs', return_value=sample_steps):
             self.assertEqual(part_1(), 250)
-        with patch('day_22.solution.read_inputs', return_value=sample_steps[::-1]):
+        with patch('year_2021.day_22.solution.read_inputs', return_value=sample_steps[::-1]):
             self.assertEqual(part_1(), 250)
 
         # Test subtracting a non-intersecting cluster.
@@ -50,7 +50,7 @@ class TestExamples(unittest.TestCase):
             'on x=0..4,y=0..4,z=0..4',
             'off x=10..14,y=0..4,z=0..4',
         ]
-        with patch('day_22.solution.read_inputs', return_value=sample_steps):
+        with patch('year_2021.day_22.solution.read_inputs', return_value=sample_steps):
             self.assertEqual(part_1(), 125)
 
         # Test adding two clusters that intersect with a plane.
@@ -58,9 +58,9 @@ class TestExamples(unittest.TestCase):
             'on x=0..4,y=0..4,z=0..4',
             'on x=2..9,y=0..4,z=0..4',
         ]
-        with patch('day_22.solution.read_inputs', return_value=sample_steps):
+        with patch('year_2021.day_22.solution.read_inputs', return_value=sample_steps):
             self.assertEqual(part_1(), 250)
-        with patch('day_22.solution.read_inputs', return_value=sample_steps[::-1]):
+        with patch('year_2021.day_22.solution.read_inputs', return_value=sample_steps[::-1]):
             self.assertEqual(part_1(), 250)
 
         # Test subtracting two clusters that intersect with a plane.
@@ -68,7 +68,7 @@ class TestExamples(unittest.TestCase):
             'on x=0..4,y=0..4,z=0..4',
             'off x=2..9,y=0..4,z=0..4',
         ]
-        with patch('day_22.solution.read_inputs', return_value=sample_steps):
+        with patch('year_2021.day_22.solution.read_inputs', return_value=sample_steps):
             self.assertEqual(part_1(), 50)
 
         # Test adding two clusters that intersect on a corner.
@@ -76,9 +76,9 @@ class TestExamples(unittest.TestCase):
             'on x=0..4,y=0..4,z=0..4',
             'on x=2..6,y=2..6,z=2..6',
         ]
-        with patch('day_22.solution.read_inputs', return_value=sample_steps):
+        with patch('year_2021.day_22.solution.read_inputs', return_value=sample_steps):
             self.assertEqual(part_1(), 223)
-        with patch('day_22.solution.read_inputs', return_value=sample_steps[::-1]):
+        with patch('year_2021.day_22.solution.read_inputs', return_value=sample_steps[::-1]):
             self.assertEqual(part_1(), 223)
 
         # Test subtracting two clusters that intersect on a corner.
@@ -86,7 +86,7 @@ class TestExamples(unittest.TestCase):
             'on x=0..4,y=0..4,z=0..4',
             'off x=2..6,y=2..6,z=2..6',
         ]
-        with patch('day_22.solution.read_inputs', return_value=sample_steps):
+        with patch('year_2021.day_22.solution.read_inputs', return_value=sample_steps):
             self.assertEqual(part_1(), 98)
 
         # Test adding two clusters where one is completely contained in the other.
@@ -94,7 +94,7 @@ class TestExamples(unittest.TestCase):
             'on x=0..4,y=0..4,z=0..4',
             'on x=1..3,y=1..3,z=1..3',
         ]
-        with patch('day_22.solution.read_inputs', return_value=sample_steps):
+        with patch('year_2021.day_22.solution.read_inputs', return_value=sample_steps):
             self.assertEqual(part_1(), 125)
 
         sample_steps = [
@@ -103,7 +103,7 @@ class TestExamples(unittest.TestCase):
             'off x=9..11,y=9..11,z=9..11',
             'on x=10..10,y=10..10,z=10..10'
         ]
-        with patch('day_22.solution.read_inputs', return_value=sample_steps):
+        with patch('year_2021.day_22.solution.read_inputs', return_value=sample_steps):
             self.assertEqual(part_1(), 39)
 
         sample_steps = [
@@ -130,7 +130,7 @@ class TestExamples(unittest.TestCase):
             'on x=-54112..-39298,y=-85059..-49293,z=-27449..7877',
             'on x=967..23432,y=45373..81175,z=27513..53682'
         ]
-        with patch('day_22.solution.read_inputs', return_value=sample_steps):
+        with patch('year_2021.day_22.solution.read_inputs', return_value=sample_steps):
             self.assertEqual(part_1(), 590784)
 
     def test_part_2(self):
@@ -196,7 +196,7 @@ class TestExamples(unittest.TestCase):
             'on x=-53470..21291,y=-120233..-33476,z=-44150..38147',
             'off x=-93533..-4276,y=-16170..68771,z=-104985..-24507'
         ]
-        with patch('day_22.solution.read_inputs', return_value=sample_steps):
+        with patch('year_2021.day_22.solution.read_inputs', return_value=sample_steps):
             self.assertEqual(part_2(), 2758514936282235)
 
 

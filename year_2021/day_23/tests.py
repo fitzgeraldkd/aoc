@@ -4,7 +4,7 @@ import sys
 from unittest.mock import patch
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.path.pardir))
 
-from day_23.solution import find_efficient_path, get_available_positions, part_1, part_2
+from year_2021.day_23.solution import find_efficient_path, get_available_positions, part_1, part_2
 
 
 class TestBase(unittest.TestCase):
@@ -29,11 +29,11 @@ class TestExamples(unittest.TestCase):
     ]
 
     def test_part_1(self):
-        with patch('day_23.solution.read_inputs', return_value=self.SAMPLE_DIAGRAM):
+        with patch('year_2021.day_23.solution.read_inputs', return_value=self.SAMPLE_DIAGRAM):
             self.assertEqual(part_1(), 12521)
 
     def test_part_2(self):
-        with patch('day_23.solution.read_inputs', return_value=self.SAMPLE_DIAGRAM):
+        with patch('year_2021.day_23.solution.read_inputs', return_value=self.SAMPLE_DIAGRAM):
             self.assertEqual(part_2(), None)
 
 
