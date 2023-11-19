@@ -9,9 +9,8 @@ from year_2021.day_23.solution import find_efficient_path, get_available_positio
 
 class TestBase(unittest.TestCase):
 
-    @unittest.expectedFailure
     def test_part_1(self):
-        self.assertEqual(part_1(), None)
+        self.assertEqual(part_1(), 14467)
 
     @unittest.expectedFailure
     def test_part_2(self):
